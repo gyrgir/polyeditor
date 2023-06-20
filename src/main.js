@@ -2,7 +2,7 @@ import { Polyeditor } from "./Polyeditor/Polyeditor";
 
 async function main() {
     const polyeditor = new Polyeditor(document.getElementById("scene-container"));
-    polyeditor.render();
+    polyeditor.start();
 }
 
 main().catch((err) => {

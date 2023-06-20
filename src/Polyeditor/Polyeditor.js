@@ -1,11 +1,12 @@
 import { createCamera } from "./components/camera";
 import { createRenderer } from "./components/renderer";
 import { createScene } from "./components/editorScene";
-import { resize } from "./components/resize";
+import { ControlLoop } from "./components/ControlLoop";
 
 class Polyeditor {
 
     #camera;
+    #loop;
     #renderer;
     #scene;
 
@@ -16,16 +17,16 @@ class Polyeditor {
 
         container.append(this.#renderer.domElement);
 
-        window.addEventListener('resize', () => {
-            resize(container, this.#camera, this.#renderer);
-            this.render();
-        });
+        this.#loop = new ControlLoop(this.#camera, this.#scene, this.#renderer);
     }
 
-    render() {
-        this.#renderer.render(this.#scene, this.#camera);
+    start() {
+        this.#loop.start();
     }
 
+    stop() {
+        this.#loop.stop();
+    }
 }
 
 export { Polyeditor }
