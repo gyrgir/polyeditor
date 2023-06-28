@@ -1,4 +1,4 @@
-import { Mesh, MeshStandardMaterial } from 'three';
+import { Mesh, MeshStandardMaterial, Vector3 } from 'three';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 
@@ -17,6 +17,7 @@ function onError(err) {
 function addNodeLabels({nodes}, scene) {
     const loader = new FontLoader();
     const material = new MeshStandardMaterial({color: 0x000000});
+    const positionScale = 1.2;
     loader.load(
         //'assets/fonts/Montserrat_Regular.json',
         'node_modules/three/examples/fonts/helvetiker_regular.typeface.json',
@@ -30,9 +31,9 @@ function addNodeLabels({nodes}, scene) {
                 });
 
                 const object = new Mesh(geometry, material);
-                object.position.x = position[0];
-                object.position.y = position[1];
-                object.position.z = position[2];
+                object.position.fromArray(position);
+                object.position.multiplyScalar(positionScale);
+
                 scene.add(object);
                 i += 1;
             }
