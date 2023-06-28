@@ -1,11 +1,5 @@
 import { BufferGeometry, Float32BufferAttribute, Mesh, MeshNormalMaterial } from 'three';
 
-import { cube } from '../polyhedra/cube'
-import { tetrahedron } from '../polyhedra/tetrahedron'
-import { octahedron } from '../polyhedra/octahedron'
-import { icosahedron } from '../polyhedra/icosahedron'
-import { dodecahedron } from '../polyhedra/dodecahedron'
-
 import { addNodeLabels } from './nodeLabels';
 
 function centerNode(face, nodes) {
@@ -54,23 +48,23 @@ function triangulate({nodes, faces}) {
     return vertices;
 }
 
-function addPolyhedron(scene) {
+function createPolyhedron(graph) {
     //const material = new MeshStandardMaterial({
     //    color: "purple",
     //});
     const material = new MeshNormalMaterial();
     const geometry = new BufferGeometry();
 
-    const positions = triangulate(dodecahedron);
+    const positions = triangulate(graph);
 
     geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
     geometry.computeVertexNormals();
 
     const object = new Mesh(geometry, material);
 
-    scene.add(object);
-    addNodeLabels(dodecahedron, scene);
-    //return object;
+    addNodeLabels(graph, object);
+
+    return object;
 }
 
-export { addPolyhedron }
+export { createPolyhedron }
