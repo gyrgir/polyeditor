@@ -4,8 +4,20 @@ import { cube } from '../polyhedra/cube'
 import { tetrahedron } from '../polyhedra/tetrahedron'
 import { octahedron } from '../polyhedra/octahedron'
 import { icosahedron } from '../polyhedra/icosahedron'
+import { dodecahedron } from '../polyhedra/dodecahedron'
 
 import { addNodeLabels } from './nodeLabels';
+
+function centerNode(face, nodes) {
+    let center = face.reduce(
+        (prev, i) => {
+            const val = nodes[i];
+            return [prev[0]+val[0], prev[1]+val[1], prev[2]+val[2]];
+        },
+        [0.0, 0.0, 0.0]);
+    let w = 1.0 / face.length;
+    return [w*center[0], w*center[1], w*center[2]];
+}
 
 function triangulate({nodes, faces}) {
     let vertices = []
@@ -25,7 +37,17 @@ function triangulate({nodes, faces}) {
                 vertices.push(...nodes[face[3]]);
                 break;
             default:
-                console.error("Generic case not yet implemented");
+                const center = centerNode(face, nodes);
+                const last = face.length - 1;
+                vertices.push(...center);
+                vertices.push(...nodes[face[last]]);
+                vertices.push(...nodes[face[0]]);
+                for (let i = 0; i < last; i += 1) {
+                    vertices.push(...center);
+                    vertices.push(...nodes[face[i]]);
+                    vertices.push(...nodes[face[i+1]]);
+                }
+                break;
         }
     }
 
@@ -39,7 +61,7 @@ function addPolyhedron(scene) {
     const material = new MeshNormalMaterial();
     const geometry = new BufferGeometry();
 
-    const positions = triangulate(icosahedron);
+    const positions = triangulate(dodecahedron);
 
     geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
     geometry.computeVertexNormals();
@@ -47,7 +69,7 @@ function addPolyhedron(scene) {
     const object = new Mesh(geometry, material);
 
     scene.add(object);
-    addNodeLabels(icosahedron, scene);
+    addNodeLabels(dodecahedron, scene);
     //return object;
 }
 
