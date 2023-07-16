@@ -12,10 +12,11 @@ class Polyhedron {
     }
 
     getCenter(faceIndex) {
-        let center = this.faces[faceIndex].reduce(
+        const face = this.faces[faceIndex];
+        let center = face.reduce(
             (previous, current) => { return previous.add(this.nodes[current]); },
             new Vector3(0, 0, 0));
-        return center.multiplyScalar(1.0 / this.faces[faceIndex].length);
+        return center.multiplyScalar(1.0 / face.length);
     }
 
 }
