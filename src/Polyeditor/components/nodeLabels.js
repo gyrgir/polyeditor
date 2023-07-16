@@ -14,7 +14,7 @@ function onError(err) {
     console.log(err);
 }
 
-function addNodeLabels({nodes}, scene) {
+function addNodeLabels(polyhedron, scene) {
     const loader = new FontLoader();
     const material = new MeshStandardMaterial({color: 0x000000});
     const positionScale = 1.2;
@@ -23,7 +23,7 @@ function addNodeLabels({nodes}, scene) {
         'node_modules/three/examples/fonts/helvetiker_regular.typeface.json',
         (font) => {
             let i = 0;
-            for (const position of nodes) {
+            for (const node of polyhedron.nodes) {
                 const geometry = new TextGeometry(i.toString(), {
                     font: font,
                     size: 0.2,
@@ -31,7 +31,7 @@ function addNodeLabels({nodes}, scene) {
                 });
 
                 const object = new Mesh(geometry, material);
-                object.position.fromArray(position);
+                object.position.copy(node);
                 object.position.multiplyScalar(positionScale);
 
                 scene.add(object);

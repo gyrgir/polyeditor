@@ -4,18 +4,20 @@ import { octahedron } from "./octahedron";
 import { dodecahedron } from "./dodecahedron";
 import { icosahedron } from "./icosahedron";
 
+import { Polyhedron } from "./Polyhedron";
+
 function getBaseShape(input) {
     switch (input) {
         case "t":
-            return tetrahedron;
+            return new Polyhedron(tetrahedron);
         case "c":
-            return cube;
+            return new Polyhedron(cube);
         case "o":
-            return octahedron;
+            return new Polyhedron(octahedron);
         case "d":
-            return dodecahedron;
+            return new Polyhedron(dodecahedron);
         case "i":
-            return icosahedron;
+            return new Polyhedron(icosahedron);
         default:
             console.error('Unknown shape "' + input + '"');
     }
