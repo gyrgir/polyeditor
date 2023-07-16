@@ -40,7 +40,7 @@ function triangulateFaces(polyhedron) {
 }
 
 
-function createPolyhedron(polyhedron) {
+function drawPolyhedron(polyhedron) {
     //const material = new MeshStandardMaterial({
     //    color: "purple",
     //});
@@ -59,4 +59,4 @@ function createPolyhedron(polyhedron) {
     return object;
 }
 
-export { createPolyhedron }
+export { drawPolyhedron }

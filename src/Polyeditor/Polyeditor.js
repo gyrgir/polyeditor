@@ -1,5 +1,5 @@
 import { createCamera } from "./components/camera";
-import { createPolyhedron } from "./components/polyhedron";
+import { drawPolyhedron } from "./components/drawPolyhedron";
 import { createRenderer } from "./components/renderer";
 import { createScene } from "./components/editorScene";
 import { ControlLoop } from "./components/ControlLoop";
@@ -37,7 +37,7 @@ class Polyeditor {
             this.#scene.remove(this.#polyhedron);
         }
         const graph = getBaseShape(input);
-        this.#polyhedron = createPolyhedron(graph);
+        this.#polyhedron = drawPolyhedron(graph);
         this.#scene.add(this.#polyhedron);
     }
 }
