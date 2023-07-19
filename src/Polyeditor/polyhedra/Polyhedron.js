@@ -50,6 +50,12 @@ class Polyhedron {
         }
     }
 
+    dual() {
+        const centers = this.faces.map((face, index) => this.getCenter(index));
+        return new Polyhedron({
+            vertices: centers, faces: this.vertexFaces, vertexFaces: this.faces
+        })
+    }
 }
 
 export { Polyhedron };

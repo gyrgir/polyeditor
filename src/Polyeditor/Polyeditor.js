@@ -4,7 +4,7 @@ import { createScene } from "./components/editorScene";
 import { drawPolyhedron } from "./components/drawPolyhedron";
 import { ControlLoop } from "./components/ControlLoop";
 
-import { getBaseShape } from "./polyhedra/baseShapes";
+import { parseConway } from "./polyhedra/parseConway";
 
 class Polyeditor {
 
@@ -36,8 +36,8 @@ class Polyeditor {
         if (this.#polyhedron) {
             this.#scene.remove(this.#polyhedron);
         }
-        const graph = getBaseShape(input);
-        this.#polyhedron = drawPolyhedron(graph);
+        const polyhedron = parseConway(input);
+        this.#polyhedron = drawPolyhedron(polyhedron);
         this.#scene.add(this.#polyhedron);
     }
 }
