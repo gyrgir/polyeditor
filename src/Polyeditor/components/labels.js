@@ -7,8 +7,6 @@ function addVertexLabels(polyhedron, scene) {
         label.position.copy(vertex);
         label.position.multiplyScalar(positionScale);
         scene.add(label);
-
-        i += 1;
     }
 }
 
@@ -19,8 +17,6 @@ function addFaceLabels(polyhedron, scene) {
         label.position.copy(polyhedron.getCenter(i));
         label.position.multiplyScalar(positionScale);
         scene.add(label);
-
-        i += 1;
     }
 }
 
