@@ -27,6 +27,8 @@ function applyOperation(operation, shape) {
     switch (operation) {
         case "d":
             return shape.dual();
+        case "k":
+            return shape.kis();
         default:
             console.error('Unknown operation "' + operation + '"');
     }

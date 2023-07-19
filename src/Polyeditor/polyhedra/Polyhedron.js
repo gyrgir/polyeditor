@@ -56,6 +56,30 @@ class Polyhedron {
             vertices: centers, faces: this.vertexFaces, vertexFaces: this.faces
         })
     }
+
+    kis() {
+        const centers = this.faces.map((_, index) => this.getCenter(index));
+        const offset = this.vertices.length;
+
+        return new Polyhedron({
+            vertices: [...this.vertices, ...centers].map((vertex) => {
+                vertex.setLength(2);
+                return vertex}),
+            faces: this.faces.map(
+                (face, i) => {
+                    const centerVertex = i + offset;
+                    const last = face.length-1;
+                    const newFaces = Array(face.length);
+                    newFaces[0] = [face[last], face[0], centerVertex];
+                    for (let j = 0; j < last; j += 1) {
+                        newFaces[j+1] = [face[j], face[j+1], centerVertex];
+                    }
+                    return newFaces;
+                }
+            ).reduce((prev, current) => [...prev, ...current], [])
+        })
+
+    }
 }
 
 export { Polyhedron };
