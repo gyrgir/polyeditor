@@ -1,6 +1,6 @@
 import { Sprite, SpriteMaterial, Texture } from "three";
 
-function createLabel(text) {
+function createLabel(text, fillColor = 'black') {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     canvas.width = 128;
@@ -10,7 +10,7 @@ function createLabel(text) {
     //tx.fill();
     ctx.font = '100px sans-serif';
 
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = fillColor;
     ctx.textAlign = "center";
     ctx.fillText(text, 64, 100);
     //ctx.strokeStyle = 'black';
