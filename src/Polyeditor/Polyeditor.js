@@ -1,7 +1,7 @@
 import { createCamera } from "./components/camera";
-import { drawPolyhedron } from "./components/drawPolyhedron";
 import { createRenderer } from "./components/renderer";
 import { createScene } from "./components/editorScene";
+import { drawPolyhedron } from "./components/drawPolyhedron";
 import { ControlLoop } from "./components/ControlLoop";
 
 import { getBaseShape } from "./polyhedra/baseShapes";
