@@ -27,14 +27,13 @@ class Polyhedron {
 
     calculateVertexFaces() {
         const neighbors = new Array(this.vertices.length)
-        let i = 0;
-        for (const face of this.faces) {
+        for (const [i, face] of this.faces.entries()) {
             for (const vertex of face) {
                 neighbors[vertex] ||= [];
                 neighbors[vertex].push(i);
             }
-            i += 1;
         }
+
         for (const [i, faces] of neighbors.entries()) {
             faces.sort(this.faceSortKey(this.vertices[i]))
         }
