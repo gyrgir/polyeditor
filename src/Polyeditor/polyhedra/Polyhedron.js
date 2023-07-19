@@ -41,12 +41,12 @@ class Polyhedron {
     }
 
     faceSortKey(vertex) {
-        // sort faces clockwise around the vertex radius
+        // sort faces counterclockwise around the vertex radius
         // TODO: precomputing centers is a performance improvement here
         return (a, b) => {
             const ca = this.getCenter(a);
             const cb = this.getCenter(b);
-            return det(ca, cb, vertex);
+            return det(cb, ca, vertex);
         }
     }
 
