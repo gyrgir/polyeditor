@@ -1,11 +1,11 @@
 import { createLabel } from "./createLabel";
 
-function addNodeLabels(polyhedron, scene) {
+function addVertexLabels(polyhedron, scene) {
     const positionScale = 1.2;
     let i = 0;
-    for (const node of polyhedron.nodes) {
+    for (const vertex of polyhedron.vertices) {
         const label = createLabel(i.toString());
-        label.position.copy(node);
+        label.position.copy(vertex);
         label.position.multiplyScalar(positionScale);
         scene.add(label);
 
@@ -26,4 +26,4 @@ function addFaceLabels(polyhedron, scene) {
     }
 }
 
-export { addNodeLabels, addFaceLabels }
+export { addVertexLabels, addFaceLabels }

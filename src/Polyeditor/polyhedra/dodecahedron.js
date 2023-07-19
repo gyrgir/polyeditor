@@ -2,7 +2,7 @@ const phi = (1 + Math.sqrt(5)) / 2
 const invPhi = 1/phi;
 
 const dodecahedron = {
-    nodes: [
+    vertices: [
         [0, -invPhi, -phi],
         [0, invPhi, -phi],
         [1, 1, -1],

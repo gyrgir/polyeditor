@@ -1,7 +1,7 @@
 const phi = (1 + Math.sqrt(5)) / 2
 
 const icosahedron = {
-    nodes: [
+    vertices: [
         [0, -1, -phi],
         [0, 1, -phi],
         [-phi, 0, -1],

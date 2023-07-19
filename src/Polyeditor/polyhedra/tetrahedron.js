@@ -1,5 +1,5 @@
 const tetrahedron = {
-    nodes: [
+    vertices: [
         [ 1.0,  1.0,  1.0],
         [ 1.0, -1.0, -1.0],
         [-1.0,  1.0, -1.0],
