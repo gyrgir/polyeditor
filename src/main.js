@@ -8,7 +8,6 @@ async function main() {
     polyeditor.generate(polyhedraInput.value);
 
     polyhedraInput.addEventListener('change', (event) => {
-        console.log(event.target.value)
         polyeditor.generate(event.target.value);
     })
 }
