@@ -7,20 +7,19 @@ function det(a, b, c) {
 class Polyhedron {
 
     constructor({vertices, faces, vertexFaces = undefined}) {
-        this.vertices = []
-        for (const coordinates of vertices) {
-            this.vertices.push(new Vector3(...coordinates));
+        this.vertices = Array(vertices.length);
+        for (const [i, coordinates] of vertices.entries()) {
+            this.vertices[i] = new Vector3(...coordinates);
         }
 
         this.faces = faces;
         this.vertexFaces = vertexFaces || this.calculateVertexFaces();
-        //console.log(this.vertexFaces)
     }
 
     getCenter(faceIndex) {
         const face = this.faces[faceIndex];
         let center = face.reduce(
-            (previous, current) => { return previous.add(this.vertices[current]); },
+            (previous, current) => previous.add(this.vertices[current]),
             new Vector3(0, 0, 0));
         return center.multiplyScalar(1.0 / face.length);
     }
@@ -51,17 +50,18 @@ class Polyhedron {
     }
 
     dual() {
-        const centers = this.faces.map((face, index) => this.getCenter(index));
-        return new Polyhedron({
-            vertices: centers, faces: this.vertexFaces, vertexFaces: this.faces
+        const centers = this.faces.map((_, index) => this.getCenter(index));
+        const p = new Polyhedron({
+            vertices: centers, faces: this.vertexFaces
         })
+        return p;
     }
 
     kis() {
         const centers = this.faces.map((_, index) => this.getCenter(index));
         const offset = this.vertices.length;
 
-        return new Polyhedron({
+        const p = new Polyhedron({
             vertices: [...this.vertices, ...centers].map((vertex) => {
                 vertex.setLength(2);
                 return vertex}),
@@ -78,7 +78,7 @@ class Polyhedron {
                 }
             ).reduce((prev, current) => [...prev, ...current], [])
         })
-
+        return p
     }
 }
 

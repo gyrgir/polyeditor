@@ -4,8 +4,7 @@ import { addVertexLabels, addFaceLabels } from './labels';
 
 function triangulateFaces(polyhedron) {
     let vertices = []
-    let faceIndex = 0;
-    for (const face of polyhedron.faces) {
+    for (const [faceIndex, face] of polyhedron.faces.entries()) {
         switch (face.length) {
             case 3:
                 vertices.push(...polyhedron.vertices[face[0]]);
@@ -33,7 +32,6 @@ function triangulateFaces(polyhedron) {
                 }
                 break;
         }
-        faceIndex += 1;
     }
 
     return vertices;
