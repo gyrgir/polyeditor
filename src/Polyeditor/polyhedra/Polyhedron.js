@@ -1,7 +1,18 @@
-import { Vector3 } from 'three';
+import { Matrix3, Vector3 } from 'three';
 
-function det(a, b, c) {
-    return a.x * (b.y*c.z - b.z*c.y) + a.y * (b.z*c.x - b.x*c.z) + a.z * (b.x*c.y - b.y*c.x);
+function orthonormalTransform(normal, auxiliar) {
+    const n = normal.clone();
+    n.normalize();
+
+    const u = auxiliar.clone();
+    u.projectOnPlane(n);
+    u.normalize();
+
+    const v = n.clone();
+    v.cross(u);
+
+    const transform = new Matrix3(n.x, n.y, n.z, u.x, u.y, u.z, v.x, v.y, v.z);
+    return transform;
 }
 
 class Polyhedron {
@@ -33,19 +44,36 @@ class Polyhedron {
             }
         }
 
-        for (const [i, faces] of neighbors.entries()) {
-            faces.sort(this.faceSortKey(this.vertices[i]))
+        for (let i = 0; i < neighbors.length; i += 1) {
+            neighbors[i] = this.sortVertexFaces(this.vertices[i], neighbors[i]);
         }
         return neighbors;
     }
 
-    faceSortKey(vertex) {
-        // sort faces counterclockwise around the vertex radius
-        // TODO: precomputing centers is a performance improvement here
-        return (a, b) => {
-            const ca = this.getCenter(a);
-            const cb = this.getCenter(b);
-            return det(cb, ca, vertex);
+    sortVertexFaces(vertex, faces) {
+        const transform = orthonormalTransform(vertex, this.getCenter(faces[0]));
+
+        const centers = faces.map((face) => {
+            const v = this.getCenter(face);
+            v.applyMatrix3(transform);
+            return {face, ...v};
+        })
+
+        centers.sort((a, b) => {
+            // vertices on different halves
+            if (a.z * b.z < 0) {
+                // first half (z > 0) vertices before second half (z < 0) vertices
+                return b.z - a.z
+            }
+            // vertices on the first half
+            if (a.z > 0 || (a.z == 0 && b.z >= 0)) {
+                return b.y - a.y
+            }
+            // second half
+            return a.y - b.y
+        });
+
+        return centers.map((x) => x.face);
         }
     }
 
