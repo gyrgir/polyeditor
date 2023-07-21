@@ -1,5 +1,7 @@
 import { createLabel } from "./createLabel";
 
+import { WireframeGeometry, LineSegments, SphereGeometry, MeshBasicMaterial, Mesh } from "three";
+
 function addVertexLabels(polyhedron, parent) {
     const positionScale = 1.2;
     for (let [i, vertex] of polyhedron.vertices.entries()) {
@@ -17,7 +19,23 @@ function addFaceLabels(polyhedron, parent) {
         label.position.copy(polyhedron.getCenter(i));
         label.position.multiplyScalar(positionScale);
         parent.add(label);
+
+        const s = new SphereGeometry(0.1, 8, 8);
+        const mat = new MeshBasicMaterial();
+        const obj = new Mesh(s, mat);
+        obj.position.copy(polyhedron.getCenter(i));
+        parent.add(obj)
     }
 }
 
-export { addVertexLabels, addFaceLabels }
+function drawWireframe(geometry, parent) {
+    const wireframe = new WireframeGeometry(geometry);
+    const line = new LineSegments( wireframe );
+    //line.material.depthTest = false;
+    line.material.opacity = 0.50;
+    line.material.transparent = true;
+
+    parent.add( line );
+}
+
+export { addVertexLabels, addFaceLabels, drawWireframe }
