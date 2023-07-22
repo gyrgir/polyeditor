@@ -19,14 +19,14 @@ async function main() {
     });
 
     const faceLabelsInput = document.getElementById("polyhedra-face-labels");
-    polyeditor.updateVertexLabels(faceLabelsInput.checked);
+    polyeditor.updateFaceLabels(faceLabelsInput.checked);
 
     faceLabelsInput.addEventListener('change', () => {
         polyeditor.updateFaceLabels(faceLabelsInput.checked)
     });
 
     const wireframeInput = document.getElementById("polyhedra-wireframe");
-    polyeditor.updateVertexLabels(wireframeInput.checked);
+    polyeditor.updateWireframe(wireframeInput.checked);
 
     wireframeInput.addEventListener('change', () => {
         polyeditor.updateWireframe(wireframeInput.checked)
