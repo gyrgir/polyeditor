@@ -1,10 +1,10 @@
 import { Matrix3, Vector3 } from 'three';
 
-function orthonormalTransform(normal, auxiliar) {
+function orthonormalTransform(normal, pointOnPlane) {
     const n = normal.clone();
     n.normalize();
 
-    const u = auxiliar.clone();
+    const u = pointOnPlane.clone();
     u.projectOnPlane(n);
     u.normalize();
 
