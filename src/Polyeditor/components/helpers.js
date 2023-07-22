@@ -1,41 +1,43 @@
+import { Group, LineSegments, MeshBasicMaterial, Mesh, SphereGeometry, WireframeGeometry } from "three";
+
 import { createLabel } from "./createLabel";
 
-import { WireframeGeometry, LineSegments, SphereGeometry, MeshBasicMaterial, Mesh } from "three";
-
-function addVertexLabels(polyhedron, parent) {
-    const positionScale = 1.2;
+function createVertexLabels(polyhedron, positionScale = 1.2) {
+    const labels = new Group();
     for (let [i, vertex] of polyhedron.vertices.entries()) {
         const label = createLabel(i.toString());
         label.position.copy(vertex);
         label.position.multiplyScalar(positionScale);
-        parent.add(label);
+        labels.add(label);
     }
+    return labels;
 }
 
-function addFaceLabels(polyhedron, parent) {
-    const positionScale = 1.2;
+function createFaceLabels(polyhedron, positionScale = 1.2) {
+    const labels = new Group();
+    const s = new SphereGeometry(0.1, 8, 8);
+    const mat = new MeshBasicMaterial({color: "orange"});
     for (let i = 0; i < polyhedron.faces.length; i += 1) {
         const label = createLabel(i.toString(), 'orange');
         label.position.copy(polyhedron.getCenter(i));
         label.position.multiplyScalar(positionScale);
-        parent.add(label);
+        labels.add(label);
 
-        const s = new SphereGeometry(0.1, 8, 8);
-        const mat = new MeshBasicMaterial();
         const obj = new Mesh(s, mat);
         obj.position.copy(polyhedron.getCenter(i));
-        parent.add(obj)
+        labels.add(obj)
     }
+    return labels;
 }
 
-function drawWireframe(geometry, parent) {
+function createWireframe(geometry) {
     const wireframe = new WireframeGeometry(geometry);
     const line = new LineSegments( wireframe );
     //line.material.depthTest = false;
     line.material.opacity = 0.50;
     line.material.transparent = true;
 
-    parent.add( line );
+    return line;
 }
 
-export { addVertexLabels, addFaceLabels, drawWireframe }
+export { createVertexLabels, createFaceLabels, createWireframe }

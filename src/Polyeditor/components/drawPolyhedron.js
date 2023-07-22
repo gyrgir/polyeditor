@@ -1,7 +1,5 @@
 import { BufferGeometry, Float32BufferAttribute, Mesh, MeshNormalMaterial } from 'three';
 
-import { addVertexLabels, addFaceLabels, drawWireframe } from './helpers';
-
 function triangulateFaces(polyhedron) {
     let vertices = []
     for (const [faceIndex, face] of polyhedron.faces.entries()) {
@@ -51,9 +49,6 @@ function drawPolyhedron(polyhedron) {
     geometry.computeVertexNormals();
 
     const object = new Mesh(geometry, material);
-
-    addVertexLabels(polyhedron, object);
-    addFaceLabels(polyhedron, object);
 
     return object;
 }

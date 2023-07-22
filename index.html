@@ -10,7 +10,12 @@
     <script type="module" src="./src/main.js"></script>
   </head>
   <body>
-    <div id="header"><input type="text" id="polyhedra-input" placeholder="input" value="c"></div>
+    <div id="header">
+      <input type="text" id="polyhedra-input" placeholder="input" value="c">
+      <label for="polyhedra-vertex-labels"><input type="checkbox" id="polyhedra-vertex-labels">vertices</label>
+      <label for="polyhedra-face-labels"><input type="checkbox" id="polyhedra-face-labels">faces</label>
+      <label for="polyhedra-wireframe"><input type="checkbox" id="polyhedra-wireframe">wireframe</label>
+    </div>
     <div id="scene-container"></div>
   </body>
 </html>
