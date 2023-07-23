@@ -58,14 +58,16 @@ class Polyhedron {
             }
             return centerFace;
         });
-        const vertexFaces = edgeData.vertexEdges.map((edges) => {
-            return edges.map((edge) => edgeData.getEdgeIndex(edge));
+        const vertexFaces = edgeData.vertexEdges.map((edges, index) => {
+            const face = edges.map((edge) => edgeData.getEdgeIndex(edge));
+            return polygonSort(face, this.vertices[index], (j) => midEdges[j].clone());
         });
 
-        return new Polyhedron({
+        const p = new Polyhedron({
             vertices: midEdges,
             faces: [...centerFaces, ...vertexFaces]
         });
+        return p;
     }
 
     dual() {
