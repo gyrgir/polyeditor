@@ -1,4 +1,4 @@
-import { Matrix3, Vector3 } from 'three';
+import { Vector3 } from 'three';
 import { EdgeData } from './EdgeData';
 import { polygonSort } from './utilities/polygonSort';
 
@@ -23,7 +23,7 @@ class Polyhedron {
     }
 
     calculateVertexFaces() {
-        const neighbors = new Array(this.vertices.length)
+        const neighbors = new Array(this.vertices.length);
         for (const [i, face] of this.faces.entries()) {
             for (const vertex of face) {
                 neighbors[vertex] ||= [];
