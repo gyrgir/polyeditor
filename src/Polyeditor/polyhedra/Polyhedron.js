@@ -1,4 +1,5 @@
 import { Matrix3, Vector3 } from 'three';
+import { EdgeData } from './EdgeData';
 import { polygonSort } from './utilities/polygonSort';
 
 class Polyhedron {
@@ -38,6 +39,33 @@ class Polyhedron {
 
     sortVertexFaces(vertex, faces) {
         return polygonSort(faces, vertex, (i) => this.getCenter(i));
+    }
+
+    ambo() {
+        const edgeData = new EdgeData(this);
+
+        const midEdges = edgeData.edges().map(([a, b]) => {
+            const v = this.vertices[a].clone();
+            return v.lerp(this.vertices[b], 0.5);
+        });
+
+        const centerFaces = this.faces.map((face) => {
+            const centerFace = new Array(face.length);
+            const last = face.length - 1;
+            centerFace[0] = edgeData.getEdgeIndex(edgeData.edgeKey(face[last], face[0]));
+            for (let i = 0; i < last; i += 1) {
+                centerFace[i+1] = edgeData.getEdgeIndex(edgeData.edgeKey(face[i], face[i+1]));
+            }
+            return centerFace;
+        });
+        const vertexFaces = edgeData.vertexEdges.map((edges) => {
+            return edges.map((edge) => edgeData.getEdgeIndex(edge));
+        });
+
+        return new Polyhedron({
+            vertices: midEdges,
+            faces: [...centerFaces, ...vertexFaces]
+        });
     }
 
     dual() {

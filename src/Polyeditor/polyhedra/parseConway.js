@@ -25,6 +25,8 @@ function getBaseShape(input) {
 
 function applyOperation(operation, shape) {
     switch (operation) {
+        case "a":
+            return shape.ambo();
         case "d":
             return shape.dual();
         case "k":
