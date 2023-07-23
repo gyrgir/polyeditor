@@ -16,6 +16,8 @@ function orthonormalTransform(normal, pointOnPlane) {
 }
 
 function polygonSort(indices, planeNormal, coordinateGetter) {
+    if (!indices.length) return [];
+
     const transform = orthonormalTransform(planeNormal, coordinateGetter(indices[0]));
 
     const points = indices.map((index) => {
