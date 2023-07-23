@@ -1,19 +1,5 @@
 import { Matrix3, Vector3 } from 'three';
-
-function orthonormalTransform(normal, pointOnPlane) {
-    const n = normal.clone();
-    n.normalize();
-
-    const u = pointOnPlane.clone();
-    u.projectOnPlane(n);
-    u.normalize();
-
-    const v = n.clone();
-    v.cross(u);
-
-    const transform = new Matrix3(n.x, n.y, n.z, u.x, u.y, u.z, v.x, v.y, v.z);
-    return transform;
-}
+import { polygonSort } from './utilities/polygonSort';
 
 class Polyhedron {
 
@@ -51,30 +37,7 @@ class Polyhedron {
     }
 
     sortVertexFaces(vertex, faces) {
-        const transform = orthonormalTransform(vertex, this.getCenter(faces[0]));
-
-        const centers = faces.map((face) => {
-            const v = this.getCenter(face);
-            v.applyMatrix3(transform);
-            return {face, ...v};
-        })
-
-        centers.sort((a, b) => {
-            // vertices on different halves
-            if (a.z * b.z < 0) {
-                // first half (z > 0) vertices before second half (z < 0) vertices
-                return b.z - a.z
-            }
-            // vertices on the first half
-            if (a.z > 0 || (a.z == 0 && b.z >= 0)) {
-                return b.y - a.y
-            }
-            // second half
-            return a.y - b.y
-        });
-
-        return centers.map((x) => x.face);
-        }
+        return polygonSort(faces, vertex, (i) => this.getCenter(i));
     }
 
     dual() {
