@@ -26,18 +26,24 @@ function polygonSort(indices, planeNormal, coordinateGetter) {
         return {index, ...v};
     })
 
-    points.sort((a, b) => {
+    points.sort((b, a) => {
+        // if either point is the reference point, it goes first
+        if (a.z === 0.0 && a.y > 0.0) return -1;
+        if (b.z === 0.0 && b.y > 0.0) return 1;
+        // if either point is opposite the reference point, it begins the second half
+        if (a.z === 0.0 && a.y < 0.0) return -b.z;
+        if (b.z === 0.0 && b.y < 0.0) return a.z;
         // vertices on different halves
         if (a.z * b.z < 0) {
-            // first half (z > 0) vertices before second half (z < 0) vertices
-            return b.z - a.z
+            // first half (z < 0) vertices before second half (z > 0) vertices
+            return a.z - b.z
         }
-        // vertices on the first half
+        // vertices on the first half: decreasing y
         if (a.z > 0 ) {//|| (a.z == 0 && b.z >= 0)) {
-            return b.y - a.y
+            return a.y - b.y
         }
-        // second half
-        return a.y - b.y
+        // second half: increasing y
+        return b.y - a.y
     });
 
     return points.map((x) => x.index);
