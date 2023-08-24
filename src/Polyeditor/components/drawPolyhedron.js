@@ -9,14 +9,14 @@ function triangulateFaces(polyhedron) {
                 vertices.push(...polyhedron.vertices[face[1]]);
                 vertices.push(...polyhedron.vertices[face[2]]);
                 break;
-            case 4:
-                vertices.push(...polyhedron.vertices[face[0]]);
-                vertices.push(...polyhedron.vertices[face[1]]);
-                vertices.push(...polyhedron.vertices[face[2]]);
-                vertices.push(...polyhedron.vertices[face[0]]);
-                vertices.push(...polyhedron.vertices[face[2]]);
-                vertices.push(...polyhedron.vertices[face[3]]);
-                break;
+            //case 4:
+            //    vertices.push(...polyhedron.vertices[face[0]]);
+            //    vertices.push(...polyhedron.vertices[face[1]]);
+            //    vertices.push(...polyhedron.vertices[face[2]]);
+            //    vertices.push(...polyhedron.vertices[face[0]]);
+            //    vertices.push(...polyhedron.vertices[face[2]]);
+            //    vertices.push(...polyhedron.vertices[face[3]]);
+            //    break;
             default:
                 const center = polyhedron.getCenter(faceIndex);
                 const last = face.length - 1;
