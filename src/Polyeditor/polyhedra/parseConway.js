@@ -7,7 +7,7 @@ import { icosahedron } from "./icosahedron";
 import { Polyhedron } from "./Polyhedron";
 
 function getBaseShape(input) {
-    switch (input) {
+    switch (input.toLowerCase()) {
         case "t":
             return new Polyhedron(tetrahedron);
         case "c":
@@ -24,7 +24,7 @@ function getBaseShape(input) {
 }
 
 function applyOperation(operation, shape) {
-    switch (operation) {
+    switch (operation.toLowerCase()) {
         case "a":
             return shape.ambo();
         case "d":
