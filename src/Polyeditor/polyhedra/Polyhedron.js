@@ -38,7 +38,7 @@ class Polyhedron {
     }
 
     sortVertexFaces(vertex, faces) {
-        return polygonSort(faces, vertex, (i) => this.getCenter(i));
+        return polygonSort(faces, vertex, i => this.getCenter(i));
     }
 
     ambo() {
@@ -78,8 +78,9 @@ class Polyhedron {
             vertices: centers.map((vertex) => {
                 vertex.setLength(2);
                 return vertex}),
-            faces: this.vertexFaces
-        })
+            faces: this.vertexFaces,
+            vertexFaces: this.faces
+        });
         return p;
     }
 
