@@ -64,9 +64,7 @@ class Polyhedron {
         });
 
         const p = new Polyhedron({
-            vertices: midEdges.map((vertex) => {
-                vertex.setLength(2);
-                return vertex}),
+            vertices: midEdges,
             faces: [...centerFaces, ...vertexFaces]
         });
         return p;
@@ -75,9 +73,7 @@ class Polyhedron {
     dual() {
         const centers = this.faces.map((_, index) => this.getCenter(index));
         const p = new Polyhedron({
-            vertices: centers.map((vertex) => {
-                vertex.setLength(2);
-                return vertex}),
+            vertices: centers,
             faces: this.vertexFaces,
             vertexFaces: this.faces
         });
@@ -89,9 +85,7 @@ class Polyhedron {
         const offset = this.vertices.length;
 
         const p = new Polyhedron({
-            vertices: [...this.vertices, ...centers].map((vertex) => {
-                vertex.setLength(2);
-                return vertex}),
+            vertices: [...this.vertices, ...centers],
             faces: this.faces.map(
                 (face, i) => {
                     const centerVertex = i + offset;
@@ -104,8 +98,15 @@ class Polyhedron {
                     return newFaces;
                 }
             ).reduce((prev, current) => [...prev, ...current], [])
-        })
+        });
         return p
+    }
+
+    setRadius(newRadius) {
+        this.vertices.map((vertex) => {
+            vertex.setLength(newRadius);
+            return vertex;
+        });
     }
 }
 

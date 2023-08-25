@@ -6,6 +6,8 @@ import { icosahedron } from "./icosahedron";
 
 import { Polyhedron } from "./Polyhedron";
 
+const baseRadius = 2.0;
+
 function getBaseShape(input) {
     switch (input.toLowerCase()) {
         case "t":
@@ -57,6 +59,7 @@ function parseConway(input) {
     let shape = getBaseShape(steps[0]);
     for (let i = 1; i < steps.length; i+= 1) {
         shape = applyOperation(steps[i], shape);
+        shape.setRadius(baseRadius);
     }
     return shape;
 }
