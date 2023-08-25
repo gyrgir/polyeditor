@@ -22,6 +22,10 @@ class Polyhedron {
         return center.multiplyScalar(1.0 / face.length);
     }
 
+    getCenters() {
+        return this.faces.map((_, index) => this.getCenter(index));
+    }
+
     calculateVertexFaces() {
         const neighbors = new Array(this.vertices.length);
         for (const [i, face] of this.faces.entries()) {
@@ -71,9 +75,8 @@ class Polyhedron {
     }
 
     dual() {
-        const centers = this.faces.map((_, index) => this.getCenter(index));
         const p = new Polyhedron({
-            vertices: centers,
+            vertices: this.getCenters(),
             faces: this.vertexFaces,
             vertexFaces: this.faces
         });
@@ -81,11 +84,10 @@ class Polyhedron {
     }
 
     kis() {
-        const centers = this.faces.map((_, index) => this.getCenter(index));
         const offset = this.vertices.length;
 
         const p = new Polyhedron({
-            vertices: [...this.vertices, ...centers],
+            vertices: [...this.vertices, ...this.getCenters()],
             faces: this.faces.map(
                 (face, i) => {
                     const centerVertex = i + offset;
