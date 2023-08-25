@@ -22,6 +22,7 @@ function getBaseShape(input) {
             return new Polyhedron(icosahedron);
         default:
             console.error('Unknown shape "' + input + '"');
+            return new Polyhedron({vertices: [], faces: []});
     }
 }
 
@@ -51,6 +52,7 @@ function applyOperation(operation, shape) {
             return shape.kis().dual();
         default:
             console.error('Unknown operation "' + operation + '"');
+            return shape;
     }
 }
 
