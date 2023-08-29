@@ -1,5 +1,7 @@
 import { Matrix3 } from "three";
 
+const zeroTolerance = 1e-6;
+
 function orthonormalTransform(normal, pointOnPlane) {
     const n = normal.clone();
     n.normalize();
@@ -28,8 +30,8 @@ function polygonSort(indices, planeNormal, coordinateGetter) {
 
     points.sort((a, b) => {
         // if either point is the reference point, it goes first
-        if (a.z === 0.0 && a.y > 0.0) return -1;
-        if (b.z === 0.0 && b.y > 0.0) return 1;
+        if (Math.abs(a.z) < zeroTolerance && a.y > 0.0) return -1;
+        if (Math.abs(b.z) < zeroTolerance && b.y > 0.0) return 1;
         // vertices on different halves
         if (a.z * b.z <= 0) {
             // first half (z >= 0) vertices before second half (z < 0) vertices
