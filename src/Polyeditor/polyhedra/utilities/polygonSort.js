@@ -37,9 +37,8 @@ function polygonSort(indices, planeNormal, coordinateGetter) {
             // first half (z >= 0) vertices before second half (z < 0) vertices
             return b.z - a.z
         }
-        // vertices on the first half: increasing y
-        // second half: decreasing y
-        return (b.y - a.y) * (a.z > 0 ? 1 : -1)
+        // vertices on the first half ? increasing y : decreasing y
+        return a.z > 0 ? b.y - a.y : a.y - b.y;
     });
 
     return points.map((x) => x.index);
