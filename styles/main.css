@@ -1,14 +1,64 @@
 body {
-  margin: 0;
-  overflow: hidden;
-  text-align: center;
-  font-size: 12px;
+  font-size: 14px;
   font-family: sans-serif;
 }
 
+p {
+  text-align: center;
+}
+
+ul {
+  list-style-position: inside;
+  padding-left: 0;
+}
+
+ul li {
+  list-style: none;
+}
+
+.page {
+  width: 1024px;
+  max-width: 90vw;
+  margin: auto;
+}
+
+.row-blocks {
+  display: flex;
+  justify-content: space-around;
+}
+
+#header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 #scene-container {
-  width: 90vw;
   height: max(600px, 80vh);
   display: block;
-  margin: auto;
+}
+
+input[type="text"] {
+  text-align: right;
+  max-width: 10ex;
+  margin-left: 1ex;
+}
+
+.instructions-link {
+  background-color: #bbbbbb;
+  color: #ffffff;
+  padding: 3px 7px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  margin-left: 0.5ex;
+}
+
+.instructions-link::before {
+  content: "?";
+}
+
+.instructions-link:hover {
+  background-color: #333333;
 }

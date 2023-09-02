@@ -10,12 +10,57 @@
     <script type="module" src="./src/main.js"></script>
   </head>
   <body>
-    <div id="header">
-      <input type="text" id="polyhedra-input" placeholder="input" value="c">
-      <label for="polyhedra-vertex-labels"><input type="checkbox" id="polyhedra-vertex-labels">vertices</label>
-      <label for="polyhedra-face-labels"><input type="checkbox" id="polyhedra-face-labels">faces</label>
-      <label for="polyhedra-wireframe"><input type="checkbox" id="polyhedra-wireframe">wireframe</label>
+    <div class="page" id="top">
+      <div id="header">
+        <h2>PolyEditor</h2>
+        <div class="row-blocks">
+          <label for="polyhedra-input">Operation</label>
+          <input type="text" id="polyhedra-input" placeholder="input" value="taC">
+          <a class="instructions-link" href="#instructions"></a>
+        </div>
+      </div>
+      <div id="scene-container"></div>
+      <div id="controls" class="row-blocks">
+        <label for="polyhedra-vertex-labels"><input type="checkbox" id="polyhedra-vertex-labels">label vertices</label>
+        <label for="polyhedra-face-labels"><input type="checkbox" id="polyhedra-face-labels">label faces</label>
+        <label for="polyhedra-wireframe"><input type="checkbox" id="polyhedra-wireframe">show wireframe</label>
+      </div>
+      <p id="description">
+        A polyhedron visualizer using <a href="https://threejs.org/">three.js</a>.
+      </p>
+      <p id="instructions">
+        Describe a polyhedron using <a href="https://en.wikipedia.org/wiki/Conway_polyhedron_notation">Conway polyhedron notation</a> to draw it.
+        The rightmost (last) letter represents the starting polyhedron, on which a series of operations are applied in order, going from right to left.
+      </p>
+      <div class="row-blocks">
+        <div>
+          <h3>Base shapes</h3>
+          <ul>
+            <li>T tetrahedron</li>
+            <li>C cube</li>
+            <li>O octahedron</li>
+            <li>D dodecahedron</li>
+            <li>I icosahedron</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Supported operations</h3>
+          <ul>
+            <li>a ambo</li>
+            <li>b bevel</li>
+            <li>d dual</li>
+            <li>e expand</li>
+            <li>j join</li>
+            <li>k kis</li>
+            <li>m meta</li>
+            <li>n needle</li>
+            <li>o ortho</li>
+            <li>t truncate</li>
+            <li>z zip</li>
+          </ul>
+        </div>
+      </div>
+      </div>
     </div>
-    <div id="scene-container"></div>
   </body>
 </html>

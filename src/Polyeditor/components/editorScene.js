@@ -8,7 +8,7 @@ function createScene() {
     const { mainLight, secondaryLight } = createLights();
     scene.add(mainLight, secondaryLight);
 
-    scene.background = new Color("skyblue");
+    scene.background = new Color(0xdddddd);
 
     return scene;
 }
