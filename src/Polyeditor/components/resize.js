@@ -1,9 +1,15 @@
 function resize(container, camera, renderer) {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
+    const canvas = renderer.domElement;
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
+    if (canvas.clientWidth !== containerWidth || canvas.clientHeight !== containerHeight) {
+        camera.aspect = containerWidth / containerHeight;
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(containerWidth, containerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+    }
 }
 
 export { resize }

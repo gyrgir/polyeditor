@@ -9,19 +9,21 @@ class ControlLoop {
     #controls;
     #renderer;
     #scene;
+    #container;
 
-    constructor(camera, scene, renderer) {
+    constructor(camera, scene, renderer, container) {
         this.#clock = new Clock();
         this.#camera = camera;
         this.#scene = scene;
         this.#renderer = renderer;
+        this.#container = container;
 
         this.#controls = new OrbitControls(this.#camera, this.#renderer.domElement);
         this.#controls.listenToKeyEvents(window);
 
         window.addEventListener('resize', () => {
             //TODO: think about throttling
-            resize(this.#renderer.domElement, this.#camera, this.#renderer);
+            resize(this.#container, this.#camera, this.#renderer);
             this.#renderer.render(this.#scene, this.#camera);
         });
     }
@@ -29,6 +31,7 @@ class ControlLoop {
     tick(delta) {}
 
     start() {
+        resize(this.#container, this.#camera, this.#renderer);
         this.#renderer.setAnimationLoop(() => {
             const delta = this.#clock.getDelta();
 

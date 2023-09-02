@@ -27,7 +27,7 @@ class Polyeditor {
 
         container.append(this.#renderer.domElement);
 
-        this.#loop = new ControlLoop(this.#camera, this.#scene, this.#renderer);
+        this.#loop = new ControlLoop(this.#camera, this.#scene, this.#renderer, container);
     }
 
     start() {
