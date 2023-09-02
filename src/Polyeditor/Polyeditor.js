@@ -1,5 +1,5 @@
 import { createCamera } from "./components/camera";
-import { createRenderer } from "./components/renderer";
+import { createRenderer } from "./components/createRenderer";
 import { createScene } from "./components/editorScene";
 import { createVertexLabels, createFaceLabels, createWireframe } from "./components/helpers"
 import { drawPolyhedron } from "./components/drawPolyhedron";
