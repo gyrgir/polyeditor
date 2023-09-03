@@ -36,6 +36,7 @@ ul li {
 #scene-container {
   height: max(600px, 80vh);
   display: block;
+  margin-bottom: 0.5em;
 }
 
 input[type="text"] {
