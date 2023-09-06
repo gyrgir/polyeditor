@@ -1,10 +1,13 @@
 import { Polyeditor } from "./Polyeditor/Polyeditor";
+import { randomShape } from "./Polyeditor/interface/randomShape";
 
 async function main() {
     const polyeditor = new Polyeditor(document.getElementById("scene-container"));
     polyeditor.start();
 
     const polyhedraInput = document.getElementById("polyhedra-input");
+    const urlParams = new URLSearchParams(window.location.search);
+    polyhedraInput.value = urlParams.has('p') ? urlParams.get('p') : randomShape();
     polyeditor.generate(polyhedraInput.value);
 
     polyhedraInput.addEventListener('change', (event) => {
