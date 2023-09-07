@@ -105,6 +105,17 @@ class Polyhedron {
     }
 
     setRadius(newRadius) {
+        const maxRadius = this.vertices.reduce(
+            (prev, next) => Math.max(prev, next.length()), 0.0);
+        const factor = newRadius / maxRadius;
+
+        this.vertices.map((vertex) => {
+            vertex.multiplyScalar(factor);
+            return vertex;
+        });
+    }
+
+    verticesToSphere(newRadius) {
         this.vertices.map((vertex) => {
             vertex.setLength(newRadius);
             return vertex;

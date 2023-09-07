@@ -6,13 +6,17 @@ async function main() {
     polyeditor.start();
 
     const polyhedraInput = document.getElementById("polyhedra-input");
+    const scaleModeInput = document.getElementById("polyhedra-scale-mode");
     const urlParams = new URLSearchParams(window.location.search);
     polyhedraInput.value = urlParams.has('p') ? urlParams.get('p') : randomShape();
-    polyeditor.generate(polyhedraInput.value);
 
-    polyhedraInput.addEventListener('change', (event) => {
-        polyeditor.generate(event.target.value);
-    })
+    function updateShape() {
+        polyeditor.generate(polyhedraInput.value, scaleModeInput.checked);
+    }
+
+    updateShape();
+    polyhedraInput.addEventListener('change', updateShape);
+    scaleModeInput.addEventListener('change', updateShape);
 
     const vertexLabelsInput = document.getElementById("polyhedra-vertex-labels");
     polyeditor.updateVertexLabels(vertexLabelsInput.checked);

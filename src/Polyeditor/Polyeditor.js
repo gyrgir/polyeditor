@@ -38,11 +38,17 @@ class Polyeditor {
         this.#loop.stop();
     }
 
-    generate(input) {
+    generate(input, nodesToSphere = false) {
+        const baseRadius = 2.0;
         if (this.#polyhedron) {
             this.#scene.remove(this.#polyhedron);
         }
         this.#polyhedronData = parseConway(input);
+        if (nodesToSphere) {
+            this.#polyhedronData.verticesToSphere(baseRadius);
+        } else {
+            this.#polyhedronData.setRadius(baseRadius);
+        }
         this.#polyhedron = drawPolyhedron(this.#polyhedronData);
         this.#scene.add(this.#polyhedron);
 
