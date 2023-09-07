@@ -25,6 +25,9 @@ function polygonSort(indices, planeNormal, coordinateGetter) {
     const points = indices.map((index) => {
         const v = coordinateGetter(index);
         v.applyMatrix3(transform);
+        // remove the normal component and normalize the rest
+        // (normalized values make sort more robust)
+        v.setComponent(0, 0.0).normalize();
         return {index, ...v};
     })
 
