@@ -13,3 +13,4 @@ These used to produce display glitches:
 - [ezzzI](https://gyrgir.github.io/polyeditor/?p=ezzzI&s=1)
 - [atenI](https://gyrgir.github.io/polyeditor/?p=atenI)
 - [tekeO](https://gyrgir.github.io/polyeditor/?p=tekeO)
+- [znnzI](https://gyrgir.github.io/polyeditor/?p=znnzI)

@@ -1,38 +1,50 @@
 import { BufferGeometry, Float32BufferAttribute, Mesh, MeshNormalMaterial } from 'three';
 
-function triangulateFaces(polyhedron) {
+function triangulateRoughFaces(polyhedron) {
     let vertices = []
     for (const [faceIndex, face] of polyhedron.faces.entries()) {
-        switch (face.length) {
-            case 3:
-                vertices.push(...polyhedron.vertices[face[0]]);
-                vertices.push(...polyhedron.vertices[face[1]]);
-                vertices.push(...polyhedron.vertices[face[2]]);
-                break;
-            //case 4:
-            //    vertices.push(...polyhedron.vertices[face[0]]);
-            //    vertices.push(...polyhedron.vertices[face[1]]);
-            //    vertices.push(...polyhedron.vertices[face[2]]);
-            //    vertices.push(...polyhedron.vertices[face[0]]);
-            //    vertices.push(...polyhedron.vertices[face[2]]);
-            //    vertices.push(...polyhedron.vertices[face[3]]);
-            //    break;
-            default:
-                const center = polyhedron.getCenter(faceIndex);
-                const last = face.length - 1;
+        if (face.length === 3) {
+            vertices.push(...polyhedron.vertices[face[0]]);
+            vertices.push(...polyhedron.vertices[face[1]]);
+            vertices.push(...polyhedron.vertices[face[2]]);
+        } else {
+            const center = polyhedron.getCenter(faceIndex);
+            for (let i = 0, j = face.length - 1; i < face.length; j = i, i++) {
                 vertices.push(...center);
-                vertices.push(...polyhedron.vertices[face[last]]);
-                vertices.push(...polyhedron.vertices[face[0]]);
-                for (let i = 0; i < last; i += 1) {
-                    vertices.push(...center);
-                    vertices.push(...polyhedron.vertices[face[i]]);
-                    vertices.push(...polyhedron.vertices[face[i+1]]);
-                }
-                break;
+                vertices.push(...polyhedron.vertices[face[j]]);
+                vertices.push(...polyhedron.vertices[face[i]]);
+            }
         }
     }
 
     return vertices;
+}
+
+
+function triangulateSmoothFaces(polyhedron) {
+    let vertices = []
+    let indices = []
+    let index = 0;
+    for (const [faceIndex, face] of polyhedron.faces.entries()) {
+
+        for (const vertexIndex of face) {
+            vertices.push(...polyhedron.vertices[vertexIndex]);
+        }
+
+        if (face.length === 3) {
+            indices.push(index, index+1, index+2);
+            index += 3;
+        } else {
+            vertices.push(...polyhedron.getCenter(faceIndex));
+            const length = face.length;
+            for (let i = 0, j = length - 1; i < length; j = i, i++) {
+                indices.push(index + j, index + i, index + length);
+            }
+            index += length + 1;
+        }
+    }
+
+    return [vertices, indices];
 }
 
 
@@ -43,8 +55,10 @@ function drawPolyhedron(polyhedron) {
     const material = new MeshNormalMaterial();
     const geometry = new BufferGeometry();
 
-    const positions = triangulateFaces(polyhedron);
+    //const positions = triangulateRoughFaces(polyhedron);
+    const [positions, indices] = triangulateSmoothFaces(polyhedron);
 
+    geometry.setIndex(indices);
     geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
     geometry.computeVertexNormals();
 
