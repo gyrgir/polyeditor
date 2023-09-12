@@ -9,6 +9,7 @@ async function main() {
     const scaleModeInput = document.getElementById("polyhedra-scale-mode");
     const urlParams = new URLSearchParams(window.location.search);
     polyhedraInput.value = urlParams.has('p') ? urlParams.get('p') : randomShape();
+    scaleModeInput.checked = urlParams.has('s') && urlParams.get('s') === '1';
 
     function updateShape() {
         polyeditor.generate(polyhedraInput.value, scaleModeInput.checked);
