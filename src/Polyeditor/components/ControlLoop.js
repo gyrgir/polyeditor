@@ -11,7 +11,7 @@ class ControlLoop {
     #scene;
     #container;
 
-    constructor(camera, scene, renderer, container) {
+    constructor(camera, scene, renderer, container, minDistance = 3, maxDistance = 20) {
         this.#clock = new Clock();
         this.#camera = camera;
         this.#scene = scene;
@@ -20,6 +20,8 @@ class ControlLoop {
 
         this.#controls = new OrbitControls(this.#camera, this.#renderer.domElement);
         this.#controls.listenToKeyEvents(window);
+        this.#controls.minDistance = minDistance;
+        this.#controls.maxDistance = maxDistance;
 
         window.addEventListener('resize', () => {
             //TODO: think about throttling
