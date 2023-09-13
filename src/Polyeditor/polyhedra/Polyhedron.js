@@ -4,6 +4,14 @@ import { polygonSort } from './utilities/polygonSort';
 
 class Polyhedron {
 
+    #edgeData;
+    get edgeData() {
+        if (!this.#edgeData) {
+            this.#edgeData = new EdgeData(this);
+        }
+        return this.#edgeData;
+    }
+
     constructor({vertices, faces, vertexFaces = undefined}) {
         this.vertices = Array(vertices.length);
         for (const [i, coordinates] of vertices.entries()) {
@@ -46,7 +54,7 @@ class Polyhedron {
     }
 
     ambo() {
-        const edgeData = new EdgeData(this);
+        const edgeData = this.edgeData;
 
         const midEdges = edgeData.edges().map(([a, b]) => {
             const v = this.vertices[a].clone();
