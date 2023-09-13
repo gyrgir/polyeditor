@@ -8,7 +8,7 @@ function createLabel(text, fillColor = 'black') {
     //tx.fillStyle = "white";
     //tx.rect(0, 0, 128, 128);
     //tx.fill();
-    ctx.font = '100px sans-serif';
+    ctx.font = '80px sans-serif';
 
     ctx.fillStyle = fillColor;
     ctx.textAlign = "center";
@@ -21,7 +21,7 @@ function createLabel(text, fillColor = 'black') {
 
     const material = new SpriteMaterial({map: texture});
     const sprite = new Sprite(material);
-    sprite.scale.multiplyScalar(0.5);
+    sprite.scale.multiplyScalar(0.4);
 
     return sprite
 }
