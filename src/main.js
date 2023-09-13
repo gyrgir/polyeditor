@@ -3,6 +3,11 @@ import { randomShape } from "./Polyeditor/interface/randomShape";
 
 function wireToggle(identifier, updateFunction, initial = null) {
     const toggle = document.getElementById(identifier);
+    if (toggle === null) {
+        console.error(`No element with id "${identifier}" found`);
+        return;
+    }
+
     if (initial !== null) {
         toggle.checked = initial;
     }
@@ -13,6 +18,11 @@ function wireToggle(identifier, updateFunction, initial = null) {
 
 function wireInput(identifier, updateFunction, initial = null) {
     const input = document.getElementById(identifier);
+    if (input === null) {
+        console.error(`No element with id "${identifier}" found`);
+        return;
+    }
+
     if (initial !== null) {
         input.value = initial;
     }
@@ -39,8 +49,8 @@ async function main() {
 
     wireToggle("polyhedra-face-mode", (value) => { polyeditor.smoothNormals = value; });
 
-    wireToggle("polyhedra-vertex-labels", (value) => { polyeditor.updateVertexLabels(value); });
-    wireToggle("polyhedra-face-labels", (value) => { polyeditor.updateFaceLabels(value); });
+    //wireToggle("polyhedra-vertex-labels", (value) => { polyeditor.updateVertexLabels(value); });
+    //wireToggle("polyhedra-face-labels", (value) => { polyeditor.updateFaceLabels(value); });
     wireToggle("polyhedra-wireframe", (value) => { polyeditor.updateWireframe(value); });
 }
 
