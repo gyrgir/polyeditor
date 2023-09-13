@@ -1,8 +1,9 @@
 import { createCamera } from "./components/camera";
 import { createRenderer } from "./components/createRenderer";
 import { createScene } from "./components/editorScene";
-import { createVertexLabels, createFaceLabels, createWireframe } from "./components/helpers"
+import { createVertexLabels, createFaceLabels } from "./components/helpers"
 import { drawPolyhedron } from "./components/drawPolyhedron";
+import { drawWireframe } from "./components/drawWireframe";
 import { ControlLoop } from "./components/ControlLoop";
 
 import { parseConway } from "./polyhedra/parseConway";
@@ -117,7 +118,7 @@ class Polyeditor {
         }
 
         if (enabled) {
-            this.#wireframe = createWireframe(this.#polyhedron.geometry);
+            this.#wireframe = drawWireframe(this.#shape);
             this.#scene.add(this.#wireframe);
         }
         else {

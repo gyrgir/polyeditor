@@ -1,4 +1,4 @@
-import { Group, LineSegments, MeshBasicMaterial, Mesh, SphereGeometry, WireframeGeometry } from "three";
+import { Group, MeshBasicMaterial, Mesh, SphereGeometry } from "three";
 
 import { createLabel } from "./createLabel";
 
@@ -30,14 +30,4 @@ function createFaceLabels(polyhedron, positionScale = 1.2) {
     return labels;
 }
 
-function createWireframe(geometry) {
-    const wireframe = new WireframeGeometry(geometry);
-    const line = new LineSegments( wireframe );
-    //line.material.depthTest = false;
-    line.material.opacity = 0.50;
-    line.material.transparent = true;
-
-    return line;
-}
-
-export { createVertexLabels, createFaceLabels, createWireframe }
+export { createVertexLabels, createFaceLabels }
