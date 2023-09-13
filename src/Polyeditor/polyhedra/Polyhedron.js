@@ -104,21 +104,27 @@ class Polyhedron {
         return p
     }
 
-    setRadius(newRadius) {
+    scaleToRadius(newRadius) {
         const maxRadius = this.vertices.reduce(
             (prev, next) => Math.max(prev, next.length()), 0.0);
         const factor = newRadius / maxRadius;
 
-        this.vertices.map((vertex) => {
-            vertex.multiplyScalar(factor);
-            return vertex;
+        return new Polyhedron({
+            vertices: this.vertices.map((vertex) => {
+                return vertex.clone().multiplyScalar(factor);
+            }),
+            faces: this.faces,
+            vertexFaces: this.vertexFaces
         });
     }
 
     verticesToSphere(newRadius) {
-        this.vertices.map((vertex) => {
-            vertex.setLength(newRadius);
-            return vertex;
+        return new Polyhedron({
+            vertices: this.vertices.map((vertex) => {
+                return vertex.clone().setLength(newRadius);
+            }),
+            faces: this.faces,
+            vertexFaces: this.vertexFaces
         });
     }
 }

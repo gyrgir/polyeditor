@@ -14,11 +14,32 @@ class Polyeditor {
     #renderer;
     #scene;
     #polyhedron;
-    #polyhedronData;
+    #baseShape;
+    #shape;
 
-    #vertexLabels
-    #faceLabels
-    #wireframe
+    #vertexLabels;
+    #faceLabels;
+    #wireframe;
+
+    #verticesOnSphere;
+
+    set verticesOnSphere(toggle) {
+        this.#verticesOnSphere = toggle;
+        this.draw();
+    }
+    get verticesOnSphere() {
+        return this.#verticesOnSphere;
+    }
+
+    #smoothNormals;
+
+    set smoothNormals(toggle) {
+        this.#smoothNormals = toggle;
+        this.draw();
+    }
+    get smoothNormals() {
+        return this.#smoothNormals;
+    }
 
     constructor(container) {
         this.#camera = createCamera();
@@ -38,18 +59,23 @@ class Polyeditor {
         this.#loop.stop();
     }
 
-    generate(input, nodesToSphere = false) {
-        const baseRadius = 2.0;
+    generate(input) {
+        this.#baseShape = parseConway(input);
+        this.draw();
+    }
+
+    draw() {
+        if (!this.#baseShape) return;
+
+        const radius = 2.0;
+        this.#shape = this.#verticesOnSphere ? this.#baseShape.verticesToSphere(radius) : this.#baseShape.scaleToRadius(radius);
+
         if (this.#polyhedron) {
             this.#scene.remove(this.#polyhedron);
         }
-        this.#polyhedronData = parseConway(input);
-        if (nodesToSphere) {
-            this.#polyhedronData.verticesToSphere(baseRadius);
-        } else {
-            this.#polyhedronData.setRadius(baseRadius);
-        }
-        this.#polyhedron = drawPolyhedron(this.#polyhedronData);
+
+        this.#polyhedron = drawPolyhedron(this.#shape, this.#smoothNormals);
+
         this.#scene.add(this.#polyhedron);
 
         this.updateVertexLabels(this.#vertexLabels);
@@ -63,7 +89,7 @@ class Polyeditor {
         }
 
         if (enabled) {
-            this.#vertexLabels = createVertexLabels(this.#polyhedronData);
+            this.#vertexLabels = createVertexLabels(this.#shape);
             this.#scene.add(this.#vertexLabels);
         }
         else {
@@ -77,7 +103,7 @@ class Polyeditor {
         }
 
         if (enabled) {
-            this.#faceLabels = createFaceLabels(this.#polyhedronData);
+            this.#faceLabels = createFaceLabels(this.#shape);
             this.#scene.add(this.#faceLabels);
         }
         else {

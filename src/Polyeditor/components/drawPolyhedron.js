@@ -48,18 +48,22 @@ function triangulateSmoothFaces(polyhedron) {
 }
 
 
-function drawPolyhedron(polyhedron) {
+function drawPolyhedron(polyhedron, smoothFaces=true) {
     //const material = new MeshStandardMaterial({
     //    color: "purple",
     //});
     const material = new MeshNormalMaterial();
     const geometry = new BufferGeometry();
 
-    //const positions = triangulateRoughFaces(polyhedron);
-    const [positions, indices] = triangulateSmoothFaces(polyhedron);
+    if (smoothFaces) {
+        const [positions, indices] = triangulateSmoothFaces(polyhedron);
+        geometry.setIndex(indices);
+        geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
+    } else {
+        const positions = triangulateRoughFaces(polyhedron);
+        geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
+    }
 
-    geometry.setIndex(indices);
-    geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
     geometry.computeVertexNormals();
 
     const object = new Mesh(geometry, material);
