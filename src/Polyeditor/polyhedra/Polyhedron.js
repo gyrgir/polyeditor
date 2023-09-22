@@ -12,7 +12,7 @@ class Polyhedron {
         return this.#edgeData;
     }
 
-    constructor({vertices, faces, vertexFaces = undefined}) {
+    constructor({vertices, faces, vertexFaces = undefined, vertexColors = undefined, faceColors = undefined}) {
         this.vertices = Array(vertices.length);
         for (const [i, coordinates] of vertices.entries()) {
             this.vertices[i] = new Vector3(...coordinates);
@@ -20,6 +20,8 @@ class Polyhedron {
 
         this.faces = faces;
         this.vertexFaces = vertexFaces || this.calculateVertexFaces();
+        this.vertexColors = vertexColors || this.vertices.map(() => 0);
+        this.faceColors = faceColors || this.faces.map(() => 0);
     }
 
     getCenter(faceIndex) {
@@ -86,7 +88,9 @@ class Polyhedron {
         const p = new Polyhedron({
             vertices: this.getCenters(),
             faces: this.vertexFaces,
-            vertexFaces: this.faces
+            vertexFaces: this.faces,
+            vertexColors: this.faceColors,
+            faceColors: this.vertexColors,
         });
         return p;
     }
@@ -107,7 +111,9 @@ class Polyhedron {
                     }
                     return newFaces;
                 }
-            ).reduce((prev, current) => [...prev, ...current], [])
+            ).reduce((prev, current) => [...prev, ...current], []),
+            vertexColors: [...this.vertexColors, ...this.faceColors.map((c) => c+1)],
+            faceColors: this.faceColors.map((c, i) => { return this.faces[i].map(() => c + 1) }).reduce((p, n) => [...p, ...n], [])
         });
         return p
     }
@@ -122,7 +128,9 @@ class Polyhedron {
                 return vertex.clone().multiplyScalar(factor);
             }),
             faces: this.faces,
-            vertexFaces: this.vertexFaces
+            vertexFaces: this.vertexFaces,
+            vertexColors: this.vertexColors,
+            faceColors: this.faceColors
         });
     }
 
@@ -132,7 +140,9 @@ class Polyhedron {
                 return vertex.clone().setLength(newRadius);
             }),
             faces: this.faces,
-            vertexFaces: this.vertexFaces
+            vertexFaces: this.vertexFaces,
+            vertexColors: this.vertexColors,
+            faceColors: this.faceColors
         });
     }
 }

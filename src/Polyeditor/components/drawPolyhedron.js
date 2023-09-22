@@ -1,4 +1,4 @@
-import { BufferGeometry, Float32BufferAttribute, Mesh, MeshNormalMaterial } from 'three';
+import { BufferGeometry, Float32BufferAttribute, Mesh, MeshStandardMaterial, MeshNormalMaterial } from 'three';
 
 function triangulateRoughFaces(polyhedron) {
     let vertices = []
@@ -19,7 +19,6 @@ function triangulateRoughFaces(polyhedron) {
 
     return vertices;
 }
-
 
 function triangulateSmoothFaces(polyhedron) {
     let vertices = []
@@ -47,12 +46,46 @@ function triangulateSmoothFaces(polyhedron) {
     return [vertices, indices];
 }
 
+function roughtVertexCount(face) {
+    if (face.length === 3) return 3;
+
+    return 3 * face.length;
+}
+
+
+function smoothVertexCount(face) {
+    if (face.length === 3) return 3;
+
+    return face.length + 1;
+}
+
+
+const palette = [
+    [1.0, 0.455, 0.0],
+    [0.075, 0.275, 0.741],
+    [0.0, 0.843, 0.0],
+]
+
+function vertexColors(polyhedron, countVertices) {
+    let colors = []
+    let color, numVertices;
+
+    for (const [faceIndex, face] of polyhedron.faces.entries()) {
+        color = palette[polyhedron.faceColors[faceIndex] % palette.length];
+        numVertices = countVertices(face);
+        for (let count = 0; count < numVertices; count++) {
+            colors.push(...color);
+        }
+    }
+
+    return colors;
+}
 
 function drawPolyhedron(polyhedron, smoothFaces=true) {
-    //const material = new MeshStandardMaterial({
-    //    color: "purple",
-    //});
-    const material = new MeshNormalMaterial();
+    const material = new MeshStandardMaterial({
+        vertexColors: true,
+    });
+    //const material = new MeshNormalMaterial();
     const geometry = new BufferGeometry();
 
     if (smoothFaces) {
@@ -63,6 +96,9 @@ function drawPolyhedron(polyhedron, smoothFaces=true) {
         const positions = triangulateRoughFaces(polyhedron);
         geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
     }
+
+    geometry.setAttribute('color', new Float32BufferAttribute(
+        vertexColors(polyhedron, smoothFaces ? smoothVertexCount : roughtVertexCount), 3));
 
     geometry.computeVertexNormals();
 

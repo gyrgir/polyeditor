@@ -4,10 +4,10 @@ import {
 } from 'three';
 
 function createLights() {
-    const mainLight = new DirectionalLight('white', 3);
-    mainLight.position.set(0, 0, 50);
+    const mainLight = new DirectionalLight(0xffffff, 1);
+    mainLight.position.set(0, 5, 5);
 
-    const secondaryLight = new HemisphereLight('white', 0xdddddd, 2);
+    const secondaryLight = new HemisphereLight(0xa0a0a0, 0x808080, 1);
 
     return { mainLight, secondaryLight };
 }
