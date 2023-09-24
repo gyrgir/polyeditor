@@ -20,8 +20,8 @@ class Polyhedron {
 
         this.faces = faces;
         this.vertexFaces = vertexFaces || this.calculateVertexFaces();
-        this.vertexColors = vertexColors || this.vertices.map(() => 0);
-        this.faceColors = faceColors || this.faces.map(() => 0);
+        this.vertexColors = vertexColors || this.vertices.map(() => '0');
+        this.faceColors = faceColors || this.faces.map(() => '0');
     }
 
     getCenter(faceIndex) {
@@ -79,8 +79,26 @@ class Polyhedron {
 
         const p = new Polyhedron({
             vertices: midEdges,
-            faces: [...centerFaces, ...vertexFaces]
+            faces: [...centerFaces, ...vertexFaces],
+            vertexColors: edgeData.edges().map(([a, b]) => {
+                const aLabel = this.vertexColors[a];
+                const bLabel = this.vertexColors[b];
+                let label;
+                if (aLabel === bLabel) {
+                    label = aLabel;
+                } else if (aLabel < bLabel) {
+                    label = aLabel + bLabel;
+                } else {
+                    label = bLabel + aLabel;
+                }
+                return 'ae' + label;
+            }),
+            faceColors: [
+                ...this.faceColors.map((l) => 'ac' + l),
+                ...this.vertexColors.map((l) => 'av' + l)
+            ]
         });
+        console.log(this.vertices.length)
         return p;
     }
 
@@ -112,8 +130,13 @@ class Polyhedron {
                     return newFaces;
                 }
             ).reduce((prev, current) => [...prev, ...current], []),
-            vertexColors: [...this.vertexColors, ...this.faceColors.map((c) => c+1)],
-            faceColors: this.faceColors.map((c, i) => { return this.faces[i].map(() => c + 1) }).reduce((p, n) => [...p, ...n], [])
+            vertexColors: [
+                ...this.vertexColors.map((l) => 'kv' + l),
+                ...this.faceColors.map((l) => 'kc' + l)],
+            faceColors: this.faceColors.map(
+                (l, i) => { return this.faces[i].map(() => 'kf' + l) }
+            ).reduce(
+                (p, n) => [...p, ...n], [])
         });
         return p
     }

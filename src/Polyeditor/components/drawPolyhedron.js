@@ -64,21 +64,32 @@ const palette = [
     [1.0, 0.455, 0.0],
     [0.075, 0.275, 0.741],
     [0.0, 0.843, 0.0],
+    [1.0, 0.114, 0.09],
+    [1.0, 1.0, 1.0],
+    [0.1, 0.1, 0.1],
 ]
 
 function vertexColors(polyhedron, countVertices) {
-    let colors = []
-    let color, numVertices;
+    let colors = {}
+    let faceColors = []
+    let color, numVertices, colorIndex = 0;
 
     for (const [faceIndex, face] of polyhedron.faces.entries()) {
-        color = palette[polyhedron.faceColors[faceIndex] % palette.length];
+        const label = polyhedron.faceColors[faceIndex];
+        if (Object.hasOwn(colors, label)) {
+            color = colors[label];
+        } else {
+            color = palette[colorIndex];
+            colors[label] = color;
+            colorIndex = (colorIndex + 1) % palette.length;
+        }
         numVertices = countVertices(face);
         for (let count = 0; count < numVertices; count++) {
-            colors.push(...color);
+            faceColors.push(...color);
         }
     }
 
-    return colors;
+    return faceColors;
 }
 
 function drawPolyhedron(polyhedron, smoothFaces=true) {
