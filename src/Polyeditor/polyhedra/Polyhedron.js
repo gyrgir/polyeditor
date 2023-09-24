@@ -12,7 +12,7 @@ class Polyhedron {
         return this.#edgeData;
     }
 
-    constructor({vertices, faces, vertexFaces = undefined, vertexColors = undefined, faceColors = undefined}) {
+    constructor({vertices, faces, vertexFaces = undefined, vertexLabels = undefined, faceLabels = undefined}) {
         this.vertices = Array(vertices.length);
         for (const [i, coordinates] of vertices.entries()) {
             this.vertices[i] = new Vector3(...coordinates);
@@ -20,8 +20,8 @@ class Polyhedron {
 
         this.faces = faces;
         this.vertexFaces = vertexFaces || this.calculateVertexFaces();
-        this.vertexColors = vertexColors || this.vertices.map(() => '0');
-        this.faceColors = faceColors || this.faces.map(() => '0');
+        this.vertexLabels = vertexLabels || this.vertices.map(() => '0');
+        this.faceLabels = faceLabels || this.faces.map(() => '0');
     }
 
     getCenter(faceIndex) {
@@ -80,9 +80,9 @@ class Polyhedron {
         const p = new Polyhedron({
             vertices: midEdges,
             faces: [...centerFaces, ...vertexFaces],
-            vertexColors: edgeData.edges().map(([a, b]) => {
-                const aLabel = this.vertexColors[a];
-                const bLabel = this.vertexColors[b];
+            vertexLabels: edgeData.edges().map(([a, b]) => {
+                const aLabel = this.vertexLabels[a];
+                const bLabel = this.vertexLabels[b];
                 let label;
                 if (aLabel === bLabel) {
                     label = aLabel;
@@ -93,9 +93,9 @@ class Polyhedron {
                 }
                 return 'ae' + label;
             }),
-            faceColors: [
-                ...this.faceColors.map((l) => 'ac' + l),
-                ...this.vertexColors.map((l) => 'av' + l)
+            faceLabels: [
+                ...this.faceLabels.map((l) => 'ac' + l),
+                ...this.vertexLabels.map((l) => 'av' + l)
             ]
         });
         console.log(this.vertices.length)
@@ -107,8 +107,8 @@ class Polyhedron {
             vertices: this.getCenters(),
             faces: this.vertexFaces,
             vertexFaces: this.faces,
-            vertexColors: this.faceColors,
-            faceColors: this.vertexColors,
+            vertexLabels: this.faceLabels,
+            faceLabels: this.vertexLabels,
         });
         return p;
     }
@@ -130,10 +130,10 @@ class Polyhedron {
                     return newFaces;
                 }
             ).reduce((prev, current) => [...prev, ...current], []),
-            vertexColors: [
-                ...this.vertexColors.map((l) => 'kv' + l),
-                ...this.faceColors.map((l) => 'kc' + l)],
-            faceColors: this.faceColors.map(
+            vertexLabels: [
+                ...this.vertexLabels.map((l) => 'kv' + l),
+                ...this.faceLabels.map((l) => 'kc' + l)],
+            faceLabels: this.faceLabels.map(
                 (l, i) => { return this.faces[i].map(() => 'kf' + l) }
             ).reduce(
                 (p, n) => [...p, ...n], [])
@@ -152,8 +152,8 @@ class Polyhedron {
             }),
             faces: this.faces,
             vertexFaces: this.vertexFaces,
-            vertexColors: this.vertexColors,
-            faceColors: this.faceColors
+            vertexLabels: this.vertexLabels,
+            faceLabels: this.faceLabels
         });
     }
 
@@ -164,8 +164,8 @@ class Polyhedron {
             }),
             faces: this.faces,
             vertexFaces: this.vertexFaces,
-            vertexColors: this.vertexColors,
-            faceColors: this.faceColors
+            vertexLabels: this.vertexLabels,
+            faceLabels: this.faceLabels
         });
     }
 }

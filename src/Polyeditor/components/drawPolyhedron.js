@@ -71,11 +71,11 @@ const palette = [
 
 function vertexColors(polyhedron, countVertices) {
     let colors = {}
-    let faceColors = []
+    let faceLabels = []
     let color, numVertices, colorIndex = 0;
 
     for (const [faceIndex, face] of polyhedron.faces.entries()) {
-        const label = polyhedron.faceColors[faceIndex];
+        const label = polyhedron.faceLabels[faceIndex];
         if (Object.hasOwn(colors, label)) {
             color = colors[label];
         } else {
@@ -85,11 +85,11 @@ function vertexColors(polyhedron, countVertices) {
         }
         numVertices = countVertices(face);
         for (let count = 0; count < numVertices; count++) {
-            faceColors.push(...color);
+            faceLabels.push(...color);
         }
     }
 
-    return faceColors;
+    return faceLabels;
 }
 
 function drawPolyhedron(polyhedron, smoothFaces=true) {
