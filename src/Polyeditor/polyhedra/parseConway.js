@@ -6,61 +6,57 @@ import { icosahedron } from "./icosahedron";
 
 import { Polyhedron } from "./Polyhedron";
 
+const baseShapes = {
+    T: tetrahedron,
+    C: cube,
+    O: octahedron,
+    D: dodecahedron,
+    I: icosahedron
+}
+
 function getBaseShape(input) {
-    switch (input.toLowerCase()) {
-        case "t":
-            return new Polyhedron(tetrahedron);
-        case "c":
-            return new Polyhedron(cube);
-        case "o":
-            return new Polyhedron(octahedron);
-        case "d":
-            return new Polyhedron(dodecahedron);
-        case "i":
-            return new Polyhedron(icosahedron);
-        default:
-            console.error('Unknown shape "' + input + '"');
-            return new Polyhedron({vertices: [], faces: []});
+    const key = input.toUpperCase();
+    if (Object.hasOwn(baseShapes, key)) {
+        return [new Polyhedron(baseShapes[key]), key];
     }
+
+    console.error('Unknown shape "' + input + '"');
+    return [new Polyhedron({vertices: [], faces: []}), ''];
+}
+
+const operations = {
+    a: (shape) => shape.ambo(),
+    d: (shape) => shape.dual(),
+    k: (shape) => shape.kis(),
+    b: (shape) => shape.ambo().dual().kis().dual(), // bevel
+    e: (shape) => shape.ambo().ambo(),              // expand
+    j: (shape) => shape.ambo().dual(),              // join
+    m: (shape) => shape.ambo().dual().kis(),        // meta
+    n: (shape) => shape.dual().kis(),               // needle
+    o: (shape) => shape.ambo().ambo().dual(),       // ortho
+    t: (shape) => shape.dual().kis().dual(),        // truncate
+    z: (shape) => shape.kis().dual()                // zip
 }
 
 function applyOperation(operation, shape) {
-    switch (operation.toLowerCase()) {
-        case "a":
-            return shape.ambo();
-        case "d":
-            return shape.dual();
-        case "k":
-            return shape.kis();
-        case "b": // bevel
-            return shape.ambo().dual().kis().dual();
-        case "e": // expand
-            return shape.ambo().ambo();
-        case "j": // join
-            return shape.ambo().dual();
-        case "m": // meta
-            return shape.ambo().dual().kis();
-        case "n": // needle
-            return shape.dual().kis();
-        case "o": // ortho
-            return shape.ambo().ambo().dual();
-        case "t": // truncate
-            return shape.dual().kis().dual();
-        case "z": // zip
-            return shape.kis().dual();
-        default:
-            console.error('Unknown operation "' + operation + '"');
-            return shape;
+    const op = operation.toLowerCase()
+    if (Object.hasOwn(operations, op)) {
+        return [operations[op](shape), op];
     }
+
+    console.error('Unknown operation "' + operation + '"');
+    return [shape, ''];
 }
 
 function parseConway(input) {
     const steps = [...input.trim()].reverse();
-    let shape = getBaseShape(steps[0]);
+    let [shape, label] = getBaseShape(steps[0]);
+    let op;
     for (let i = 1; i < steps.length; i+= 1) {
-        shape = applyOperation(steps[i], shape);
+        [shape, op] = applyOperation(steps[i], shape);
+        label = op + label;
     }
-    return shape;
+    return [shape, label];
 }
 
 export { parseConway }

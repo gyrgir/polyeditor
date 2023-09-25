@@ -61,7 +61,8 @@ class Polyeditor {
     }
 
     generate(input) {
-        this.#baseShape = parseConway(input);
+        const [polyhedron, label] = parseConway(input)
+        this.#baseShape = polyhedron;
         this.draw();
     }
 
