@@ -14,16 +14,6 @@ const baseShapes = {
     I: icosahedron
 }
 
-function getBaseShape(input) {
-    const key = input.toUpperCase();
-    if (Object.hasOwn(baseShapes, key)) {
-        return [new Polyhedron(baseShapes[key]), key];
-    }
-
-    console.error('Unknown shape "' + input + '"');
-    return [new Polyhedron({vertices: [], faces: []}), ''];
-}
-
 const operations = {
     a: (shape) => shape.ambo(),
     d: (shape) => shape.dual(),
@@ -38,25 +28,44 @@ const operations = {
     z: (shape) => shape.kis().dual()                // zip
 }
 
-function applyOperation(operation, shape) {
-    const op = operation.toLowerCase()
-    if (Object.hasOwn(operations, op)) {
-        return [operations[op](shape), op];
+
+function cleanInput(input) {
+    const steps = [...input.trim()].reverse();
+    const cleaned = [];
+    let i = 0;
+
+    for (; i < steps.length; i++) {
+        let shape = steps[i].toUpperCase();
+        if (Object.hasOwn(baseShapes, shape)) {
+            cleaned.push(shape);
+            break;
+        } else {
+            console.error('Unknown shape "' + steps[i] + '"');
+        }
+    }
+    i++;
+
+    for (; i < steps.length; i++) {
+        let operation = steps[i].toLowerCase();
+        if (Object.hasOwn(operations, operation)) {
+            cleaned.push(operation);
+        } else {
+            console.error('Unknown operation "' + steps[i] + '"');
+        }
     }
 
-    console.error('Unknown operation "' + operation + '"');
-    return [shape, ''];
+    return cleaned;
 }
 
+
 function parseConway(input) {
-    const steps = [...input.trim()].reverse();
-    let [shape, label] = getBaseShape(steps[0]);
-    let op;
-    for (let i = 1; i < steps.length; i+= 1) {
-        [shape, op] = applyOperation(steps[i], shape);
-        label = op + label;
+    const steps = cleanInput(input);
+    let shape = new Polyhedron(baseShapes[steps[0]]);
+    for (let i = 1; i < steps.length; i++) {
+        shape = operations[steps[i]](shape);
     }
-    return [shape, label];
+
+    return [shape, steps.reverse().join('')];
 }
 
 export { parseConway }
