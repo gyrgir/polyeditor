@@ -98,7 +98,6 @@ class Polyhedron {
                 ...this.vertexLabels.map((l) => 'av' + l)
             ]
         });
-        console.log(this.vertices.length)
         return p;
     }
 
