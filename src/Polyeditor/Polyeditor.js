@@ -21,6 +21,7 @@ class Polyeditor {
     #vertexLabels;
     #faceLabels;
     #wireframe;
+    #label;
 
     #verticesOnSphere;
 
@@ -61,8 +62,7 @@ class Polyeditor {
     }
 
     generate(input) {
-        const [polyhedron, label] = parseConway(input)
-        this.#baseShape = polyhedron;
+        [this.#baseShape, this.#label] = parseConway(input);
         this.draw();
     }
 
@@ -124,6 +124,15 @@ class Polyeditor {
         }
         else {
             this.#wireframe = null;
+        }
+    }
+
+    get shapeStats() {
+        return {
+            label: this.#label,
+            numVertices: this.#shape.vertices.length,
+            numFaces: this.#shape.faces.length,
+            numEdges: this.#shape.edgeData.numEdges()
         }
     }
 }

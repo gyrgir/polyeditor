@@ -72,6 +72,10 @@ class EdgeData {
     getEdgeIndex(key) {
         return this.#edges.get(key);
     }
+
+    numEdges() {
+        return this.#edges.size;
+    }
 }
 
 export { EdgeData }

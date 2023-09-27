@@ -31,6 +31,11 @@ function wireInput(identifier, updateFunction, initial = null) {
     input.addEventListener("change", (event) => { updateFunction(event.target.value); });
 }
 
+function displayStats(stats) {
+    const container = document.getElementById("stats");
+    container.innerHTML = `${stats.label}: ${stats.numVertices} vertices, ${stats.numFaces} faces, ${stats.numEdges} edges.`
+}
+
 async function main() {
     const polyeditor = new Polyeditor(document.getElementById("scene-container"));
     polyeditor.start();
@@ -39,7 +44,10 @@ async function main() {
 
     wireInput(
         "polyhedra-input",
-        (value) => { polyeditor.generate(value); },
+        (value) => {
+            polyeditor.generate(value);
+            displayStats(polyeditor.shapeStats);
+        },
         urlParams.has('p') ? urlParams.get('p') : randomShape());
 
     wireToggle(
