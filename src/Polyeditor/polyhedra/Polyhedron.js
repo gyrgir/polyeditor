@@ -118,7 +118,7 @@ class Polyhedron {
 
         const p = new Polyhedron({
             vertices: [...this.vertices, ...this.getCenters()],
-            faces: this.faces.map(
+            faces: this.faces.flatMap(
                 (face, i) => {
                     const centerVertex = i + offset;
                     const last = face.length-1;
@@ -129,14 +129,13 @@ class Polyhedron {
                     }
                     return newFaces;
                 }
-            ).reduce((prev, current) => [...prev, ...current], []),
+            ),
             vertexLabels: [
                 ...this.vertexLabels.map((l) => 'kv' + l),
                 ...this.faceLabels.map((l) => 'kc' + l)],
-            faceLabels: this.faceLabels.map(
+            faceLabels: this.faceLabels.flatMap(
                 (l, i) => { return this.faces[i].map(() => 'kf' + l) }
-            ).reduce(
-                (p, n) => [...p, ...n], [])
+            )
         });
         return p
     }
