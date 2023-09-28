@@ -21,7 +21,8 @@ class ControlLoop {
         this.#controls = new OrbitControls(this.#camera, this.#renderer.domElement);
         this.#controls.listenToKeyEvents(window);
         this.#controls.minDistance = minDistance;
-        this.#controls.maxDistance = maxDistance;
+        this.#controls.maxDistance = maxDistance
+        this.#controls.enablePan = false;
 
         window.addEventListener('resize', () => {
             //TODO: think about throttling
