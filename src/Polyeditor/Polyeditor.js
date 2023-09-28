@@ -6,6 +6,7 @@ import { drawPolyhedron } from "./components/drawPolyhedron";
 import { drawWireframe } from "./components/drawWireframe";
 import { ControlLoop } from "./components/ControlLoop";
 
+import { getName } from "./polyhedra/namedShapes";
 import { parseConway } from "./polyhedra/parseConway";
 
 class Polyeditor {
@@ -128,8 +129,9 @@ class Polyeditor {
     }
 
     get shapeStats() {
+        const name = getName(this.#label)
         return {
-            label: this.#label,
+            label: name ? `${name} (${this.#label})` : this.#label,
             numVertices: this.#shape.vertices.length,
             numFaces: this.#shape.faces.length,
             numEdges: this.#shape.edgeData.numEdges()
