@@ -53,7 +53,7 @@ class EdgeData {
     getEdge(key) {
         const a = key % this.#numVertices;
         const b = (key - a) / this.#numVertices;
-        return a < b ? [a, b] : [b, a]
+        return [a, b]
     }
 
     edges() {
