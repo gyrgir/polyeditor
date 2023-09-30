@@ -11,7 +11,7 @@ function randomShape(minOperations=2, maxOperations=5) {
     const opCount = randomInt(minOperations, maxOperations+1);
     let shape = new Array(opCount + 1);
     for (let i = 0; i < opCount; i += 1) {
-        shape[i] = randomChoice("adkbejmnotz");
+        shape[i] = randomChoice("adkbegjmnostz");
     }
     shape[opCount] = randomChoice("TCODI");
     return shape.join('');
