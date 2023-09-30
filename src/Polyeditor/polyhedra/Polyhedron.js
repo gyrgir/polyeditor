@@ -154,7 +154,6 @@ class Polyhedron {
                 a = face[j];
                 b = face[i];
                 key = edgeData.edgeKey(a, b);
-                console.log(a, b, key)
                 edgeOffset = 2 * edgeData.getEdgeIndex(key);
                 if (edgeData.getEdge(key)[0] === a) {
                     faceVertices.push(edgeOffset, edgeOffset + 1);
