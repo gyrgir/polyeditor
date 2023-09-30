@@ -11,6 +11,8 @@ class ControlLoop {
     #scene;
     #container;
 
+    callbacks = [];
+
     constructor(camera, scene, renderer, container, minDistance = 3, maxDistance = 20) {
         this.#clock = new Clock();
         this.#camera = camera;
@@ -31,7 +33,9 @@ class ControlLoop {
         });
     }
 
-    tick(delta) {}
+    tick(delta) {
+        for (const callback of this.callbacks) callback(delta);
+    }
 
     start() {
         resize(this.#container, this.#camera, this.#renderer);

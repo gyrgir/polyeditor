@@ -1,4 +1,5 @@
 import { createCamera } from "./components/camera";
+import { createLights } from "./components/lights";
 import { createRenderer } from "./components/createRenderer";
 import { createScene } from "./components/editorScene";
 import { createVertexLabels, createFaceLabels } from "./components/helpers"
@@ -8,6 +9,7 @@ import { ControlLoop } from "./components/ControlLoop";
 
 import { getName } from "./polyhedra/namedShapes";
 import { parseConway } from "./polyhedra/parseConway";
+import { Group } from "three";
 
 class Polyeditor {
 
@@ -18,6 +20,7 @@ class Polyeditor {
     #polyhedron;
     #baseShape;
     #shape;
+    #mainLightRig;
 
     #vertexLabels;
     #faceLabels;
@@ -49,9 +52,21 @@ class Polyeditor {
         this.#scene = createScene();
         this.#renderer = createRenderer();
 
+        let {mainLight, secondaryLight} = createLights();
+        this.#mainLightRig = new Group();
+        this.#mainLightRig.position.copy(this.#camera.position);
+        this.#mainLightRig.add(mainLight);
+        mainLight.position.set(0, 5, 2);
+
+        this.#scene.add(this.#mainLightRig);
+        this.#scene.add(secondaryLight);
+
         container.append(this.#renderer.domElement);
 
         this.#loop = new ControlLoop(this.#camera, this.#scene, this.#renderer, container);
+        this.#loop.callbacks.push(() => {
+            this.#mainLightRig.position.copy(this.#camera.position);
+        })
     }
 
     start() {
