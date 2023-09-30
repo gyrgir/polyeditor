@@ -31,6 +31,11 @@ const operations = {
 }
 
 
+function baseShape(key) {
+    return new Polyhedron(baseShapes[key]);
+}
+
+
 function cleanInput(input) {
     const steps = [...input.trim()].reverse();
     const cleaned = [];
@@ -62,9 +67,9 @@ function cleanInput(input) {
 
 function parseConway(input) {
     const steps = cleanInput(input);
-    let shape = new Polyhedron(baseShapes[steps[0]]);
-    for (let i = 1; i < steps.length; i++) {
-        shape = operations[steps[i]](shape);
+    let shape = baseShape(steps[0]);
+    for (const step of steps.slice(1)) {
+        shape = operations[step](shape);
     }
 
     return [shape, steps.reverse().join('')];
