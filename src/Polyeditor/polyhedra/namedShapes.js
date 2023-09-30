@@ -12,13 +12,13 @@ const knownShapes = {
     tO: "truncated octahedron",
     eC: "rhombicuboctahedron",
     bC: "truncated cuboctahedron",
-    //sD: : "snub cube",
+    sC: "snub cube",
     aD: "icosidodecahedron",
     tD: "truncated dodecahedron",
     tI: "truncated icosahedron",
     eD: "rhombicosidodecahedron",
     bD: "truncated icosidodecahedron",
-    //sD: "snub dodecahedron",
+    sD: "snub dodecahedron",
     // Catalan solids
     kT: "triakis tetrahedron",
     jC: "rhombic dodecahedron",
@@ -26,13 +26,13 @@ const knownShapes = {
     kC: "tetrakis hexahedron",
     oC: "deltoidal icositetrahedron",
     mC: "disdyakis dodecahedron",
-    //gC: "pentagonal icositetrahedron",
+    gC: "pentagonal icositetrahedron",
     jD: "rhombic triacontahedron",
     kI: "triakis icosahedron",
     kD: "pentakis dodecahedron",
     oD: "deltoidal hexecontahedron",
     mD: "disdyakis triacontahedron",
-    //gD: "pentagonal hexecontahedron"
+    gD: "pentagonal hexecontahedron"
 }
 
 const eq3 = {
@@ -49,12 +49,12 @@ const eq3 = {
     taO: "bC",
     aaD: "eD",
     taD: "bD",
-    //dsC: "gC",
+    dsC: "gC",
     dtD: "kI",
     dtI: "kD",
     deD: "oD",
     dbD: "mD",
-    //dsD: "gD"
+    dsD: "gD"
 }
 
 const equivalences = {

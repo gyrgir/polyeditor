@@ -139,6 +139,79 @@ class Polyhedron {
         return p
     }
 
+    snub() {
+        const edgeData = this.edgeData;
+
+        const edgeVertices = edgeData.edges().flatMap(([a, b]) => {
+            const v1 = this.vertices[a].clone();
+            const v2 = this.vertices[a].clone();
+            return [v1.lerp(this.vertices[b], 1./3.), v2.lerp(this.vertices[b], 2./3.)];
+        });
+
+        const splitFaces = this.faces.flatMap((face) => {
+            let a, b, key, edgeOffset, faceVertices = [];
+            for (let i = 0, j = face.length-1; i < face.length; j = i, i++) {
+                a = face[j];
+                b = face[i];
+                key = edgeData.edgeKey(a, b);
+                console.log(a, b, key)
+                edgeOffset = 2 * edgeData.getEdgeIndex(key);
+                if (edgeData.getEdge(key)[0] === a) {
+                    faceVertices.push(edgeOffset, edgeOffset + 1);
+                } else {
+                    faceVertices.push(edgeOffset + 1, edgeOffset);
+                }
+            }
+            let centralFace = [];
+            let sideFaces = [];
+            for (let i = 0, j = faceVertices.length - 2; i < faceVertices.length; j = i, i += 2) {
+                centralFace.push(faceVertices[i]),
+                sideFaces.push([faceVertices[j], faceVertices[j+1], faceVertices[i]]);
+            }
+            return [centralFace, ...sideFaces];
+        });
+
+        const vertexFaces = edgeData.vertexEdges.map((edges, index) => {
+            const face = edges.map((key) => {
+                const edgeIndex = edgeData.getEdgeIndex(key);
+                const ends = edgeData.getEdge(key);
+                return (index === ends[0]) ? 2*edgeIndex : 2*edgeIndex + 1;
+            })
+            return polygonSort(face, this.vertices[index], (j) => edgeVertices[j].clone());
+        });
+
+        const p = new Polyhedron({
+            vertices: edgeVertices,
+            faces: [...splitFaces, ...vertexFaces],
+            vertexLabels: edgeData.edges().flatMap(([a, b]) => {
+                const aLabel = this.vertexLabels[a];
+                const bLabel = this.vertexLabels[b];
+                let label;
+                if (aLabel === bLabel) {
+                    label = aLabel;
+                } else if (aLabel < bLabel) {
+                    label = aLabel + bLabel;
+                } else {
+                    label = bLabel + aLabel;
+                }
+                return ['se' + label, 'se' + label];
+            }),
+            faceLabels: [
+                ...this.faceLabels.flatMap((l, index) => {
+                    let labels = ['sc' + l];
+                    for (const vertex of this.faces[index]) {
+                        labels.push('ss' + l);
+                    }
+                    return labels;
+                }),
+                ...this.vertexLabels.map((l) => 'sv' + l)
+            ]
+        })
+
+
+        return p
+    }
+
     scaleToRadius(newRadius) {
         const maxRadius = this.vertices.reduce(
             (prev, next) => Math.max(prev, next.length()), 0.0);

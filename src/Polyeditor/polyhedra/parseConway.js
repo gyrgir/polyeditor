@@ -20,10 +20,12 @@ const operations = {
     k: (shape) => shape.kis(),
     b: (shape) => shape.ambo().dual().kis().dual(), // bevel
     e: (shape) => shape.ambo().ambo(),              // expand
+    g: (shape) => shape.snub().dual(),              // gyro
     j: (shape) => shape.ambo().dual(),              // join
     m: (shape) => shape.ambo().dual().kis(),        // meta
     n: (shape) => shape.dual().kis(),               // needle
     o: (shape) => shape.ambo().ambo().dual(),       // ortho
+    s: (shape) => shape.snub(),                     // snub
     t: (shape) => shape.dual().kis().dual(),        // truncate
     z: (shape) => shape.kis().dual()                // zip
 }
