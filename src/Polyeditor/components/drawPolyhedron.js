@@ -93,10 +93,10 @@ function vertexColors(polyhedron, countVertices) {
 }
 
 function drawPolyhedron(polyhedron, smoothFaces=true) {
-    const material = new MeshStandardMaterial({
-        vertexColors: true,
-    });
-    //const material = new MeshNormalMaterial();
+    //const material = new MeshStandardMaterial({
+    //    vertexColors: true,
+    //});
+    const material = new MeshNormalMaterial();
     const geometry = new BufferGeometry();
 
     if (smoothFaces) {
