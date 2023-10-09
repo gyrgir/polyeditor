@@ -6,7 +6,7 @@ function createCamera() {
         window.innerWidth / window.innerHeight,
         1,
         1000);
-    camera.position.set(3, 4, 6);
+    camera.position.set(3, 4, 4);
 
     return camera;
 }
