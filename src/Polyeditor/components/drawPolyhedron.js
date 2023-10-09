@@ -1,4 +1,5 @@
-import { BufferGeometry, Float32BufferAttribute, Mesh, MeshStandardMaterial, MeshNormalMaterial } from 'three';
+import { BufferGeometry, Float32BufferAttribute, Mesh, MeshStandardMaterial } from 'three';
+import { faceColors } from './faceColors';
 
 function triangulateRoughFaces(polyhedron) {
     let vertices = []
@@ -46,57 +47,11 @@ function triangulateSmoothFaces(polyhedron) {
     return [vertices, indices];
 }
 
-function roughtVertexCount(face) {
-    if (face.length === 3) return 3;
 
-    return 3 * face.length;
-}
-
-
-function smoothVertexCount(face) {
-    if (face.length === 3) return 3;
-
-    return face.length + 1;
-}
-
-
-const palette = [
-    [1.0, 0.455, 0.0],
-    [0.075, 0.275, 0.741],
-    [0.0, 0.843, 0.0],
-    [1.0, 0.114, 0.09],
-    [1.0, 1.0, 1.0],
-    [0.1, 0.1, 0.1],
-]
-
-function vertexColors(polyhedron, countVertices) {
-    let colors = {}
-    let faceLabels = []
-    let color, numVertices, colorIndex = 0;
-
-    for (const [faceIndex, face] of polyhedron.faces.entries()) {
-        const label = polyhedron.faceLabels[faceIndex];
-        if (Object.hasOwn(colors, label)) {
-            color = colors[label];
-        } else {
-            color = palette[colorIndex];
-            colors[label] = color;
-            colorIndex = (colorIndex + 1) % palette.length;
-        }
-        numVertices = countVertices(face);
-        for (let count = 0; count < numVertices; count++) {
-            faceLabels.push(...color);
-        }
-    }
-
-    return faceLabels;
-}
-
-function drawPolyhedron(polyhedron, smoothFaces=true) {
-    //const material = new MeshStandardMaterial({
-    //    vertexColors: true,
-    //});
-    const material = new MeshNormalMaterial();
+function drawPolyhedron(polyhedron, smoothFaces=true, palette) {
+    const material = new MeshStandardMaterial({
+        vertexColors: true,
+    });
     const geometry = new BufferGeometry();
 
     if (smoothFaces) {
@@ -108,8 +63,7 @@ function drawPolyhedron(polyhedron, smoothFaces=true) {
         geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
     }
 
-    geometry.setAttribute('color', new Float32BufferAttribute(
-        vertexColors(polyhedron, smoothFaces ? smoothVertexCount : roughtVertexCount), 3));
+    geometry.setAttribute('color', faceColors(polyhedron, smoothFaces, palette));
 
     geometry.computeVertexNormals();
 

@@ -45,6 +45,9 @@ class Polyeditor {
         return this.#smoothNormals;
     }
 
+    #colorPalette;
+    #numActiveColors;
+
     constructor(container) {
         this.#camera = createCamera();
         this.#scene = createScene();
@@ -85,7 +88,16 @@ class Polyeditor {
             this.#scene.remove(this.#polyhedron);
         }
 
-        this.#polyhedron = drawPolyhedron(this.#shape, this.#smoothNormals);
+        this.#colorPalette = [
+            [1.0, 0.455, 0.0],
+            [0.075, 0.275, 0.741],
+            [0.0, 0.843, 0.0],
+            [1.0, 0.114, 0.09],
+            [1.0, 1.0, 1.0],
+            [0.1, 0.1, 0.1],
+        ]
+
+        this.#polyhedron = drawPolyhedron(this.#shape, this.#smoothNormals, this.#colorPalette);
 
         this.#scene.add(this.#polyhedron);
 
@@ -145,6 +157,15 @@ class Polyeditor {
             numEdges: this.#shape.edgeData.numEdges()
         }
     }
+
+    faceColors() {
+        return this.#colorPalette.slice(0, this.#numActiveColors);
+    }
+
+    setFaceColor(index, color) {
+        this.#colorPalette[index] = color;
+    }
+
 }
 
 export { Polyeditor }
