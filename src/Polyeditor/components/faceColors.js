@@ -16,24 +16,26 @@ function smoothVertexCount(face) {
 
 
 function vertexColors(polyhedron, countVertices, palette) {
-    let colors = {}
     let faceColors = []
-    let color, numVertices, colorIndex = 0;
+    let color, numVertices, next;
+    const faceKeys = new Map();
 
     for (const [faceIndex, face] of polyhedron.faces.entries()) {
         const label = polyhedron.faceLabels[faceIndex];
-        if (Object.hasOwn(colors, label)) {
-            color = colors[label];
-        } else {
-            color = palette[colorIndex];
-            colors[label] = color;
-            colorIndex = (colorIndex + 1) % palette.length;
+        if (!faceKeys.has(label)) {
+
+            faceKeys.set(label, faceKeys.size);
         }
+        color = palette.getColor(faceKeys.get(label));
+
         numVertices = countVertices(face);
         for (let count = 0; count < numVertices; count++) {
             faceColors.push(...color);
         }
     }
+
+    //TODO: a better design would not require silently modifying an argument
+    palette.activeColorsNumber = faceKeys.size;
 
     return faceColors;
 }

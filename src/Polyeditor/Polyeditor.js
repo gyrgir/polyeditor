@@ -6,6 +6,7 @@ import { createVertexLabels, createFaceLabels } from "./components/helpers"
 import { drawPolyhedron } from "./components/drawPolyhedron";
 import { drawWireframe } from "./components/drawWireframe";
 import { ControlLoop } from "./components/ControlLoop";
+import { Palette } from "./components/Palette";
 
 import { getName } from "./polyhedra/namedShapes";
 import { parseConway } from "./polyhedra/parseConway";
@@ -46,7 +47,10 @@ class Polyeditor {
     }
 
     #colorPalette;
-    #numActiveColors;
+
+    get colorPalette() {
+        return this.#colorPalette
+    }
 
     constructor(container) {
         this.#camera = createCamera();
@@ -63,6 +67,13 @@ class Polyeditor {
         container.append(this.#renderer.domElement);
 
         this.#loop = new ControlLoop(this.#camera, this.#scene, this.#renderer, container);
+
+        this.#colorPalette = new Palette([
+            [1.0, 0.455, 0.0],
+            [0.075, 0.275, 0.741],
+            [0.0, 0.843, 0.0],
+            [1.0, 0.114, 0.09]
+        ]);
     }
 
     start() {
@@ -87,15 +98,6 @@ class Polyeditor {
         if (this.#polyhedron) {
             this.#scene.remove(this.#polyhedron);
         }
-
-        this.#colorPalette = [
-            [1.0, 0.455, 0.0],
-            [0.075, 0.275, 0.741],
-            [0.0, 0.843, 0.0],
-            [1.0, 0.114, 0.09],
-            [1.0, 1.0, 1.0],
-            [0.1, 0.1, 0.1],
-        ]
 
         this.#polyhedron = drawPolyhedron(this.#shape, this.#smoothNormals, this.#colorPalette);
 
@@ -158,12 +160,8 @@ class Polyeditor {
         }
     }
 
-    faceColors() {
-        return this.#colorPalette.slice(0, this.#numActiveColors);
-    }
-
     setFaceColor(index, color) {
-        this.#colorPalette[index] = color;
+        this.#colorPalette.setColor(index, color);
     }
 
 }
