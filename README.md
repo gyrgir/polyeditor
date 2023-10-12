@@ -6,7 +6,7 @@ Mostly an excuse to learn three.js, inspired by [polyHédronisme](https://levska
 
 ## Known issues
 
-- Visualization fails for polyhedra that have non-convex faces. Compare for example gsnC with gddsnC. This happens because my face ordering algorithm (polygonSort.js) breaks down for non-convex polygons. I don't think this can be solved by a proper convex hull, since the shape is not convex. I think my problems with incorrectly ordered edges on polyhedra faces could be solved using a more powerful data structure (winged edges or half edges?)
+- Visualization fails for polyhedra that have non-convex faces. Compare for example gsnC with gddsnC. This happens because my face ordering algorithm (polygonSort.js) breaks down for non-convex polygons. I think that the robust way to fix it would be to rewrite the polyhedron data structure and operations using half-edges.
 
 ## Examples
 
