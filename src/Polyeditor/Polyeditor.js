@@ -5,6 +5,7 @@ import { createScene } from "./components/editorScene";
 import { createVertexLabels, createFaceLabels } from "./components/helpers"
 import { drawPolyhedron } from "./components/drawPolyhedron";
 import { drawWireframe } from "./components/drawWireframe";
+import { faceColors } from "./components/faceColors";
 import { ControlLoop } from "./components/ControlLoop";
 import { Palette } from "./components/Palette";
 
@@ -108,6 +109,12 @@ class Polyeditor {
         this.updateWireframe(this.#wireframe);
     }
 
+    recolor() {
+        this.#polyhedron.geometry.setAttribute(
+            'color',
+            faceColors(this.#shape, this.#smoothNormals, this.#colorPalette));
+    }
+
     updateVertexLabels(enabled) {
         if (this.#vertexLabels) {
             this.#scene.remove(this.#vertexLabels);
@@ -162,6 +169,7 @@ class Polyeditor {
 
     setFaceColor(index, color) {
         this.#colorPalette.setColor(index, color);
+        this.recolor();
     }
 
     get numberOfColors() {

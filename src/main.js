@@ -94,7 +94,6 @@ async function main() {
 
     wireColorPickers("color-picker", (target) => {
         polyeditor.setFaceColor(Number(target.dataset.colorId), target.value);
-        polyeditor.draw();
     });
 }
 
