@@ -28,7 +28,6 @@ class Palette {
 
     getColor(index) {
         this.#extendColors(index + 1);
-        console.log(this.#colors.length, this.#colors.length, index, this.#colors[index]);
         return this.#colors[index];
     }
 
