@@ -63,3 +63,7 @@ input[type="text"] {
 .instructions-link:hover {
   background-color: #333333;
 }
+
+.hidden {
+  display: none;
+}

@@ -36,6 +36,36 @@ function displayStats(stats) {
     container.innerHTML = `${stats.label}: ${stats.numVertices} vertices, ${stats.numFaces} faces, ${stats.numEdges} edges.`
 }
 
+function updateColorPickers(polyeditor) {
+    const numberOfColors = polyeditor.numberOfColors;
+    const colorControls = document.getElementById("color-controls");
+    const colorPickers = colorControls.children;
+    let numPickers = colorPickers.length;
+
+    while (numPickers < numberOfColors) {
+        const picker = colorPickers[0].cloneNode();
+        picker.dataset.colorId = numPickers;
+        colorControls.appendChild(picker);
+        numPickers++;
+    }
+
+    const palette = polyeditor.colorPalette;
+    for (const control of document.getElementById("color-controls").children) {
+        if (control.dataset.colorId < numberOfColors) {
+            control.value = `#${palette.getColor(control.dataset.colorId).getHexString()}`;
+            control.classList.remove("hidden");
+        } else {
+            control.classList.add("hidden");
+        }
+    }
+}
+
+function wireColorPickers(className, updateFunction) {
+    for (const picker of document.getElementsByClassName(className)) {
+        picker.addEventListener("change", (event) => { updateFunction(event.target); });
+    }
+}
+
 async function main() {
     const polyeditor = new Polyeditor(document.getElementById("scene-container"));
     polyeditor.start();
@@ -47,6 +77,7 @@ async function main() {
         (value) => {
             polyeditor.generate(value);
             displayStats(polyeditor.shapeStats);
+            updateColorPickers(polyeditor);
         },
         urlParams.has('p') ? urlParams.get('p') : randomShape());
 
@@ -60,6 +91,11 @@ async function main() {
     //wireToggle("polyhedra-vertex-labels", (value) => { polyeditor.updateVertexLabels(value); });
     //wireToggle("polyhedra-face-labels", (value) => { polyeditor.updateFaceLabels(value); });
     wireToggle("polyhedra-wireframe", (value) => { polyeditor.updateWireframe(value); });
+
+    wireColorPickers("color-picker", (target) => {
+        polyeditor.setFaceColor(Number(target.dataset.colorId), target.value);
+        polyeditor.draw();
+    });
 }
 
 main().catch((err) => {

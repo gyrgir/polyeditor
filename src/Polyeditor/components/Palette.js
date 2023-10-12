@@ -4,21 +4,9 @@ class Palette {
 
     #colors;
 
-    #activeColorsNumber;
-
-    get activeColorsNumber() {
-        return this.#activeColorsNumber;
-    }
-
-    set activeColorsNumber(number) {
-        this.#extendColors(number);
-        this.#activeColorsNumber = number;
-    }
-
     constructor(colors = []) {
         // TODO: this does not work for hex colors (unlike setColor)
         this.#colors = colors.map((value) => new Color(...value));
-        this.#activeColorsNumber = this.#colors.length;
     }
 
     setColor(index, value) {

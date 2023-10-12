@@ -20,7 +20,10 @@
         </div>
       </div>
       <div id="scene-container"></div>
-      <div id="controls" class="row-blocks">
+      <div id="color-controls" class="row-blocks">
+        <input type="color" class="color-picker hidden" data-color-id=0>
+      </div>
+      <div id="shape-controls" class="row-blocks">
         <label for="polyhedra-scale-mode"><input type="checkbox" id="polyhedra-scale-mode">constant radius</label>
         <label for="polyhedra-face-mode"><input type="checkbox" id="polyhedra-face-mode" checked>smooth faces</label>
         <label for="polyhedra-wireframe"><input type="checkbox" id="polyhedra-wireframe">show wireframe</label>
@@ -28,9 +31,6 @@
         <label for="polyhedra-face-labels"><input type="checkbox" id="polyhedra-face-labels">label faces</label>-->
       </div>
       <p id="stats"></p>
-      <p id="description">
-        A polyhedron visualizer using <a href="https://threejs.org/">three.js</a>.
-      </p>
       <p id="instructions">
         Describe a polyhedron using <a href="https://en.wikipedia.org/wiki/Conway_polyhedron_notation">Conway polyhedron notation</a> to draw it.
         The rightmost (last) letter represents the starting polyhedron, on which a series of operations are applied in order, going from right to left.
@@ -65,6 +65,9 @@
           </ul>
         </div>
       </div>
+      <p id="description">
+        A polyhedron visualizer using <a href="https://threejs.org/">three.js</a>.
+      </p>
       <div class="row-blocks">
         <span><a href="https://github.com/gyrgir/polyeditor">View source</a> on github &copy; 2023</span>
       </div>

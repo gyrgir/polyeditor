@@ -34,9 +34,6 @@ function vertexColors(polyhedron, countVertices, palette) {
         }
     }
 
-    //TODO: a better design would not require silently modifying an argument
-    palette.activeColorsNumber = faceKeys.size;
-
     return faceColors;
 }
 

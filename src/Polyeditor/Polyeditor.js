@@ -164,6 +164,11 @@ class Polyeditor {
         this.#colorPalette.setColor(index, color);
     }
 
+    get numberOfColors() {
+        const labels = new Set(this.#shape.faceLabels);
+        return labels.size;
+    }
+
 }
 
 export { Polyeditor }
