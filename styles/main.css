@@ -1,9 +1,10 @@
 body {
   font-size: 14px;
   font-family: sans-serif;
+  background: whitesmoke;
 }
 
-p {
+h2, p {
   text-align: center;
 }
 
@@ -25,6 +26,7 @@ ul li {
 .row-blocks {
   display: flex;
   justify-content: space-around;
+  margin: 0.5em 0;
 }
 
 #header {
@@ -34,7 +36,7 @@ ul li {
 }
 
 #scene-container {
-  height: max(600px, 80vh);
+  height: 80vh;
   display: block;
   margin-bottom: 0.5em;
 }
@@ -43,6 +45,8 @@ input[type="text"] {
   text-align: right;
   max-width: 10ex;
   margin-left: 1ex;
+  height: 16px;
+  line-height: 16px;
 }
 
 .instructions-link {
@@ -66,4 +70,35 @@ input[type="text"] {
 
 .hidden {
   display: none;
+}
+
+input[type="color"] {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  width: 3em;
+  height: 1.8em;
+  padding: 0;
+  margin: 0 0.1em;
+}
+
+button.shape,
+button.operation {
+  border: 0;
+  background-color: #bbbbbb;
+  width: 3ex;
+  padding: 0.2em 0;
+  cursor: pointer;
+  margin: 0.2em 1ex 0.2em 0;
+  text-align: center;
+  color: whitesmoke;
+  font-weight: bold;
+}
+
+button.shape:hover,
+button.operation:hover {
+  background-color: #333333;
 }

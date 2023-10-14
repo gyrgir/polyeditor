@@ -69,17 +69,18 @@ function wireColorPickers(className, updateFunction) {
 async function main() {
     const polyeditor = new Polyeditor(document.getElementById("scene-container"));
     polyeditor.start();
-
     const urlParams = new URLSearchParams(window.location.search);
+
+    function updateShape(value) {
+        polyeditor.generate(value);
+        displayStats(polyeditor.shapeStats);
+        updateColorPickers(polyeditor);
+    }
 
     wireInput(
         "polyhedra-input",
-        (value) => {
-            polyeditor.generate(value);
-            displayStats(polyeditor.shapeStats);
-            updateColorPickers(polyeditor);
-        },
-        urlParams.has('p') ? urlParams.get('p') : randomShape());
+        updateShape,
+        urlParams.has('p') ? urlParams.get('p') : randomShape(2, 4));
 
     wireToggle(
         "polyhedra-scale-mode",
@@ -95,6 +96,21 @@ async function main() {
     wireColorPickers("color-picker", (target) => {
         polyeditor.setFaceColor(Number(target.dataset.colorId), target.value);
     });
+
+    const input = document.getElementById("polyhedra-input");
+    for (const shapeButton of document.getElementsByClassName("shape")) {
+        shapeButton.addEventListener('click', (event) => {
+            input.value = event.target.innerHTML;
+            updateShape(input.value);
+        });
+    }
+
+    for (const operationButton of document.getElementsByClassName("operation")) {
+        operationButton.addEventListener('click', (event) => {
+            input.value = event.target.innerHTML + input.value;
+            updateShape(input.value);
+        });
+    }
 }
 
 main().catch((err) => {
