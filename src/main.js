@@ -111,6 +111,13 @@ async function main() {
             updateShape(input.value);
         });
     }
+
+    const randomInput = document.getElementById("random-input");
+    randomInput.addEventListener('click', (event) => {
+        event.preventDefault();
+        input.value = randomShape();
+        updateShape(input.value);
+    });
 }
 
 main().catch((err) => {
