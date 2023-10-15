@@ -26,6 +26,7 @@ ul li {
 .row-blocks {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   margin: 0.5em 0;
 }
 
@@ -49,25 +50,6 @@ input[type="text"] {
   line-height: 16px;
 }
 
-.instructions-link {
-  background-color: #bbbbbb;
-  color: #ffffff;
-  padding: 3px 7px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: bold;
-  text-decoration: none;
-  margin-left: 0.5ex;
-}
-
-.instructions-link::before {
-  content: "?";
-}
-
-.instructions-link:hover {
-  background-color: #333333;
-}
-
 .hidden {
   display: none;
 }
@@ -85,12 +67,12 @@ input[type="color"] {
   margin: 0 0.1em;
 }
 
-button.shape,
-button.operation {
+.button-control {
   border: 0;
+  border-radius: 3px;
   background-color: #bbbbbb;
-  width: 3ex;
-  padding: 0.2em 0;
+  min-width: 3ex;
+  padding: 0.1em 0.3em 0.3em 0.3em;
   cursor: pointer;
   margin: 0.2em 1ex 0.2em 0;
   text-align: center;
@@ -98,7 +80,11 @@ button.operation {
   font-weight: bold;
 }
 
-button.shape:hover,
-button.operation:hover {
+a.button-control {
+  text-decoration: none;
+  margin-left: 1ex;
+}
+
+.button-control:hover {
   background-color: #333333;
 }

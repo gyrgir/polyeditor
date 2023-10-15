@@ -14,9 +14,9 @@
       <div id="header">
         <h2>PolyEditor</h2>
         <div class="row-blocks">
-          <label for="polyhedra-input">Operation</label>
+          <label for="polyhedra-input" id="polyhedra-input-label">Operation</label>
           <input type="text" id="polyhedra-input" placeholder="shape">
-          <a class="instructions-link" href="#instructions"></a>
+          <a class="button-control" href="#instructions" role="button">Help</a>
         </div>
       </div>
       <div id="scene-container"></div>
@@ -33,7 +33,8 @@
       <p id="stats"></p>
       <h2 id="instructions">Instructions</h2>
       <p>
-        Select a <strong>base shape</strong> and apply one or more <strong>operations</strong> to it. You can also input a polyhedron directly on the box on the top right,
+        Select a <strong>base shape</strong> and apply one or more <strong>operations</strong> to it. You can also input a polyhedron directly on the
+        <a href="#polyhedra-input">box</a> on the top right,
         which uses <a href="https://en.wikipedia.org/wiki/Conway_polyhedron_notation">Conway polyhedron notation</a>:
         The rightmost (last) letter represents the starting polyhedron, then operations are applied in order, going from right to left.
       </p>
@@ -44,29 +45,29 @@
         <div>
           <h3>Base shapes</h3>
           <ul>
-            <li><button class="shape">T</button>Tetrahedron</li>
-            <li><button class="shape">C</button>Cube</li>
-            <li><button class="shape">O</button>Octahedron</li>
-            <li><button class="shape">D</button>Dodecahedron</li>
-            <li><button class="shape">I</button>Icosahedron</li>
+            <li><button class="button-control shape">T</button>Tetrahedron</li>
+            <li><button class="button-control shape">C</button>Cube</li>
+            <li><button class="button-control shape">O</button>Octahedron</li>
+            <li><button class="button-control shape">D</button>Dodecahedron</li>
+            <li><button class="button-control shape">I</button>Icosahedron</li>
           </ul>
         </div>
         <div>
           <h3>Operations</h3>
           <ul>
-            <li><button class="operation">a</button>Ambo</li>
-            <li><button class="operation">b</button>Bevel</li>
-            <li><button class="operation">d</button>Dual</li>
-            <li><button class="operation">e</button>Expand</li>
-            <li><button class="operation">g</button>Gyro</li>
-            <li><button class="operation">j</button>Join</li>
-            <li><button class="operation">k</button>Kis</li>
-            <li><button class="operation">m</button>Meta</li>
-            <li><button class="operation">n</button>Needle</li>
-            <li><button class="operation">o</button>Ortho</li>
-            <li><button class="operation">s</button>Snub</li>
-            <li><button class="operation">t</button>Truncate</li>
-            <li><button class="operation">z</button>Zip</li>
+            <li><button class="button-control operation">a</button>Ambo</li>
+            <li><button class="button-control operation">b</button>Bevel</li>
+            <li><button class="button-control operation">d</button>Dual</li>
+            <li><button class="button-control operation">e</button>Expand</li>
+            <li><button class="button-control operation">g</button>Gyro</li>
+            <li><button class="button-control operation">j</button>Join</li>
+            <li><button class="button-control operation">k</button>Kis</li>
+            <li><button class="button-control operation">m</button>Meta</li>
+            <li><button class="button-control operation">n</button>Needle</li>
+            <li><button class="button-control operation">o</button>Ortho</li>
+            <li><button class="button-control operation">s</button>Snub</li>
+            <li><button class="button-control operation">t</button>Truncate</li>
+            <li><button class="button-control operation">z</button>Zip</li>
           </ul>
         </div>
       </div>
