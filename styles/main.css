@@ -46,6 +46,7 @@ input[type="text"] {
   text-align: right;
   max-width: 10ex;
   margin-left: 1ex;
+  margin-right: 1ex;
   height: 16px;
   line-height: 16px;
 }
@@ -82,7 +83,6 @@ input[type="color"] {
 
 a.button-control {
   text-decoration: none;
-  margin-left: 1ex;
 }
 
 .button-control:hover {
