@@ -5,8 +5,7 @@ class Palette {
     #colors;
 
     constructor(colors = []) {
-        // TODO: this does not work for hex colors (unlike setColor)
-        this.#colors = colors.map((value) => new Color(...value));
+        this.#colors = colors.map((value) => new Color(value));
     }
 
     setColor(index, value) {

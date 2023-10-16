@@ -70,10 +70,19 @@ class Polyeditor {
         this.#loop = new ControlLoop(this.#camera, this.#scene, this.#renderer, container);
 
         this.#colorPalette = new Palette([
-            [1.0, 0.455, 0.0],
-            [0.075, 0.275, 0.741],
-            [0.0, 0.843, 0.0],
-            [1.0, 0.114, 0.09]
+            "#00876c",
+            "#6ca97d",
+            "#b0cb97",
+            "#eeeebd",
+            "#d8b875",
+            "#c77f3b",
+            "#b43c1a",
+            "#469873",
+            "#8fba89",
+            "#d0dca9",
+            "#e2d498",
+            "#cf9c56",
+            "#be6027"
         ]);
     }
 
